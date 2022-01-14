@@ -17,8 +17,6 @@ Compilateur    : Mingw-w64 g++ 11.2.0
 
 using namespace std;
 
-void viderBuffer();
-
 int main() {
    /* -------------------------------------------------------------------------------
     *  Initialisation des messages
@@ -47,8 +45,4 @@ int main() {
    pause(MSG_QUITTER);
 
    return EXIT_SUCCESS;
-}
-
-void viderBuffer() {
-   cin.ignore(numeric_limits<streamsize>::max(), '\n');
 }
