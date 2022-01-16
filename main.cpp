@@ -1,18 +1,26 @@
 /*
 -----------------------------------------------------------------------------------
-Nom du fichier : main.cpp
-Nom du labo    : Labo 8 - Survivor
-Auteur(s)      : Grégory Rey-Mermet, Cédric Rosat
-Date creation  : 14.01.2022
-Description    :
-Remarque(s)    : -
-Compilateur    : Mingw-w64 g++ 11.2.0
+Nom du fichier  : main.cpp
+Nom du labo     : Labo 8 - Survivor
+Auteur(s)       : Grégory Rey-Mermet, Cédric Rosat
+Date creation   : 14.01.2022
+
+Description     :
+
+Remarque(s)     : -
+
+Modification(s) : -
+
+Compilateur     : Mingw-w64 g++ 11.2.0
 -----------------------------------------------------------------------------------
 */
 #include <cstdlib>
 #include <iostream>
 
 #include "annexe.h"
+#include "Robot.h"
+#include "Survivor.h"
+#include "Terrain.h"
 
 using namespace std;
 
@@ -20,6 +28,7 @@ int main() {
    /* -------------------------------------------------------------------------------
     *  Initialisation des messages
     * -----------------------------------------------------------------------------*/
+
    //Message d'introduction du programme
    const string MSG_INTRO = "Ce programme permet de simuler le mouvement d'un nombre\n"
                             "de robots donnes dans un espace defini par l'utilisateur.\n"
@@ -55,12 +64,28 @@ int main() {
    /* -------------------------------------------------------------------------------
     *  Introduction au programme
     * -----------------------------------------------------------------------------*/
-   cout << MSG_INTRO << endl << endl;
 
-   const unsigned LARGEUR     = saisir(MSG_LARGEUR, MIN_TERRAIN, MAX_TERRAIN, MSG_ERREUR_SAISIE);
-   const unsigned HAUTEUR     = saisir(MSG_HAUTEUR, MIN_TERRAIN, MAX_TERRAIN, MSG_ERREUR_SAISIE);
-   const unsigned NBRE_OBJETS = saisir(MSG_OBJET, MIN_ROBOT, MAX_ROBOT, MSG_ERREUR_SAISIE);
+   cout << MSG_INTRO << endl;
 
+   // Saisie des diverses valeurs
+   const unsigned LARGEUR     = saisir(MSG_LARGEUR, MIN_TERRAIN, MAX_TERRAIN,
+                                       MSG_ERREUR_SAISIE);
+   const unsigned HAUTEUR     = saisir(MSG_HAUTEUR, MIN_TERRAIN, MAX_TERRAIN,
+                                       MSG_ERREUR_SAISIE);
+   const unsigned NBRE_OBJETS = saisir(MSG_OBJET, MIN_ROBOT, MAX_ROBOT,
+                                       MSG_ERREUR_SAISIE);
+
+   // Initialisation de la seed random
+   initRand();
+
+   // Initialisation du terrain
+   Terrain<Robot> terrain(LARGEUR, HAUTEUR);
+
+   for (unsigned nbRobots = 0; nbRobots < NBRE_OBJETS; ++nbRobots) {
+      terrain.ajoutObjet(nouvelObjet(terrain));
+   }
+
+   cout << terrain << endl;
 
    /* -------------------------------------------------------------------------------
     *  Message de fin

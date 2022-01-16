@@ -1,31 +1,38 @@
 /*
 -------------------------------------------------------------------------------------
-Nom du fichier : Coordonnee.h
-Nom du labo    : Labo 8 - Survivor
-Auteur(s)      : Grégory Rey-Mermet, Cédric Rosat
-Date creation  : 14.01.2022
-Description    : Ce fichier d'en-tête (.h) met à la disposition de l'utilisateur
-                 une classe permettant de gérer des coordonnées
-Remarque(s)    : -
-Compilateur    : Mingw-w64 g++ 11.2.0
+Nom du fichier  : Coordonnee.h
+Nom du labo     : Labo 8 - Survivor
+Auteur(s)       : Grégory Rey-Mermet, Cédric Rosat
+Date creation   : 14.01.2022
+
+Description     : Ce fichier d'en-tête (.h) met à la disposition de l'utilisateur
+                  une classe permettant de gérer des coordonnées
+
+Remarque(s)     : -
+
+Modification(s) : -
+
+Compilateur     : Mingw-w64 g++ 11.2.0
 -------------------------------------------------------------------------------------
 */
 
-#ifndef LABO8_COORDONNEE_H
-#define LABO8_COORDONNEE_H
+#ifndef COORDONNEE_H
+#define COORDONNEE_H
+
+template <typename T>
+class Terrain;
 
 class Coordonnee {
-public:
-   //Les directions de déplacement d'une coordonnée
-   enum class Direction {UP, DOWN, RIGHT, LEFT};
+   /* -------------------------------------------------------------------------------
+    *  Fonctions amies
+    * -----------------------------------------------------------------------------*/
 
-   /**
-    * Constructeur
-    *
-    * @param posX   Coordonnée X
-    * @param posY   Coordonnée Y
-    */
-   Coordonnee(unsigned posX, unsigned posY);
+   // Permet à la classe Robot d'accéder aux coordonnées X et Y
+   friend class Robot;
+
+   // Créé un nouvel objet avec des coordonnées aléatoires
+   template <typename T>
+   friend T nouvelObjet(const Terrain<T>& terrain);
 
    /**
     * Opérateur de comparaison d'une coordonnée
@@ -34,7 +41,33 @@ public:
     * @return           True  : Les coordonnées sont identiques
     *                   False : Les coordéonnes sont différentes
     */
-   bool operator==(const Coordonnee& coordonnee);
+   friend bool operator==(const Coordonnee& lhs, const Coordonnee& rhs);
+
+public:
+   //Les directions de déplacement d'une coordonnée
+   enum class Direction {UP, DOWN, RIGHT, LEFT};
+
+   /* -------------------------------------------------------------------------------
+    *  Constructeurs et destructeur
+    * -----------------------------------------------------------------------------*/
+
+   /**
+    * Constructeur par défaut
+    *
+    */
+   Coordonnee();
+
+   /**
+    * Constructeur
+    *
+    * @param posX Coordonnée X
+    * @param posY Coordonnée Y
+    */
+   Coordonnee(unsigned posX, unsigned posY);
+
+   /* -------------------------------------------------------------------------------
+    *  Fonctions membres
+    * -----------------------------------------------------------------------------*/
 
    /**
     * Déplacement d'une coordonnées sur un axe
@@ -44,24 +77,31 @@ public:
     */
    void deplacer(Direction direction, unsigned saut = 1);
 
+   /* -------------------------------------------------------------------------------
+    *  Accesseurs
+    * -----------------------------------------------------------------------------*/
+
    /**
     * Permet de lire la valeur de X de la coordonnée
     *
-    * @return   Coordonnée X
+    * @return Coordonnée X
     */
    unsigned getPosX() const;
 
    /**
     * Permet de lire la valeur de Y de la coordonnée
     *
-    * @return   Coordonnée Y
+    * @return Coordonnée Y
     */
    unsigned getPosY() const;
 
 
 private:
-   unsigned posX; //Coordonnée X
-   unsigned posY; //Coordonnée Y
+   /* -------------------------------------------------------------------------------
+    *  Données membres
+    * -----------------------------------------------------------------------------*/
+
+   unsigned _posX, _posY;
 };
 
-#endif //LABO8_COORDONNEE_H
+#endif //COORDONNEE_H

@@ -1,5 +1,6 @@
 /*
 -----------------------------------------------------------------------------------
+<<<<<<< HEAD
 Nom du fichier : Coordonnee.cpp
 Nom du labo    : Labo 8 - Survivor
 Auteur(s)      : Grégory Rey-Mermet, Cédric Rosat
@@ -7,41 +8,70 @@ Date creation  : 14.01.2022
 Description    : Ce fichier définit une classe permettant de gérer des coordonnées
 Remarque(s)    : -
 Compilateur    : Mingw-w64 g++ 11.2.0
+=======
+Nom du fichier  : Coordonnee.cpp
+Nom du labo     : Labo 8 - Survivor
+Auteur(s)       : Grégory Rey-Mermet, Cédric Rosat
+Date creation   : 14.01.2022
+
+Description     : Ce fichier définit une classe permettant de gérer des coordonnées
+
+Remarque(s)     : -
+
+Modification(s) : -
+
+Compilateur     : Mingw-w64 g++ 11.2.0
+>>>>>>> 31d701c (Ajout classes et librairie + merge)
 -----------------------------------------------------------------------------------
 */
 
 #include "Coordonnee.h"
 
-Coordonnee::Coordonnee(unsigned posX, unsigned posY) {
-   this->posX = posX;
-   this->posY = posY;
+/* -------------------------------------------------------------------------------
+ *  Fonctions amies
+ * -----------------------------------------------------------------------------*/
+
+bool operator==(const Coordonnee& lhs, const Coordonnee& rhs) {
+   return lhs._posX == rhs._posX and lhs._posY == rhs._posY;
 }
 
-bool Coordonnee::operator==(const Coordonnee &coordonnee) {
-   return this->posX == coordonnee.posX && this->posY == coordonnee.posY;
-}
+/* -------------------------------------------------------------------------------
+ *  Constructeurs et destructeur
+ * -----------------------------------------------------------------------------*/
+
+Coordonnee::Coordonnee() : Coordonnee(0, 0) {}
+
+Coordonnee::Coordonnee(unsigned posX, unsigned posY) : _posX(posX), _posY(posY) {}
+
+/* -------------------------------------------------------------------------------
+ *  Fonctions membres
+ * -----------------------------------------------------------------------------*/
 
 void Coordonnee::deplacer(Coordonnee::Direction direction, unsigned saut) {
    switch (direction) {
       case Direction::UP:
-         this->posY += saut;
+         _posY += saut;
          break;
       case Direction::DOWN:
-         this->posY -= saut;
+         _posY -= saut;
          break;
       case Direction::RIGHT:
-         this->posX += saut;
+         _posX += saut;
          break;
       case Direction::LEFT:
-         this->posX -= saut;
+         _posX -= saut;
          break;
    }
 }
 
+/* -------------------------------------------------------------------------------
+ *  Accesseurs
+ * -----------------------------------------------------------------------------*/
+
 unsigned Coordonnee::getPosX() const {
-   return this->posX;
+   return _posX;
 }
 
 unsigned Coordonnee::getPosY() const {
-   return this->posY;
+   return _posY;
 }
