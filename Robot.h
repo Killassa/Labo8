@@ -27,8 +27,6 @@ Compilateur     : Mingw-w64 g++ 11.2.0
 template <typename T>
 class Terrain;
 
-#include "Coordonnee.h"
-
 class Robot {
    /* -------------------------------------------------------------------------------
    *  Fonctions amies
@@ -98,8 +96,10 @@ private:
     *  Données membres
     * -----------------------------------------------------------------------------*/
 
+   //TODO Direction est une propriété de robot plutôt que coordonnée?
+
    // Directions de déplacement d'un robot
-   enum class Directions {UP, DOWN, RIGHT, LEFT} direction;
+   enum class Directions {UP, DOWN, RIGHT, LEFT} _direction;
 
    Coordonnee      _coordonnee;
    const unsigned  _id;

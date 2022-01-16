@@ -1,14 +1,5 @@
 /*
 -----------------------------------------------------------------------------------
-<<<<<<< HEAD
-Nom du fichier : Coordonnee.cpp
-Nom du labo    : Labo 8 - Survivor
-Auteur(s)      : Grégory Rey-Mermet, Cédric Rosat
-Date creation  : 14.01.2022
-Description    : Ce fichier définit une classe permettant de gérer des coordonnées
-Remarque(s)    : -
-Compilateur    : Mingw-w64 g++ 11.2.0
-=======
 Nom du fichier  : Coordonnee.cpp
 Nom du labo     : Labo 8 - Survivor
 Auteur(s)       : Grégory Rey-Mermet, Cédric Rosat
@@ -21,7 +12,6 @@ Remarque(s)     : -
 Modification(s) : -
 
 Compilateur     : Mingw-w64 g++ 11.2.0
->>>>>>> 31d701c (Ajout classes et librairie + merge)
 -----------------------------------------------------------------------------------
 */
 

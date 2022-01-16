@@ -58,7 +58,7 @@ public:
    Coordonnee();
 
    /**
-    * Constructeur
+    * Constructeur d'initialisation
     *
     * @param posX Coordonnée X
     * @param posY Coordonnée Y
