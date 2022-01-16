@@ -29,13 +29,15 @@ void pause(const std::string& message);
 /**
  * Saisir dans un intervalle (saisie controllée)
  *
+ * @tparam T        Type utilisé pour la saisie
  * @param msgSaisie Message pour indiquer la saisie à effectuer
  * @param min       Valeur min
  * @param max       Valeur max
  * @param msgErreur Message d'erreur ("" par défaut)
  * @return          Entier saisi
  */
-int saisir(const std::string& msgSaisie, int min, int max, const std::string& msgErreur = "");
+template <typename T>
+T saisir(const std::string& msgSaisie, T min, T max, const std::string& msgErreur = "");
 
 
 /**
@@ -43,4 +45,7 @@ int saisir(const std::string& msgSaisie, int min, int max, const std::string& ms
  */
 void viderBuffer();
 
-#endif //LABO6_ANNEXE_H
+
+#include "annexe_def.h" //Définitions
+
+#endif //LABO8_ANNEXE_H

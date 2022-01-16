@@ -1,6 +1,6 @@
 /*
 -------------------------------------------------------------------------------------
-Nom du fichier : annexe.cpp
+Nom du fichier : annexe_def.h
 Nom du labo    : Labo 8 - Survivor
 Auteur(s)      : Grégory Rey-Mermet, Cédric Rosat
 Date creation  : 14.01.2022
@@ -47,22 +47,22 @@ void verifierSaisie(const bool erreur, const string& msgErreur) {
    viderBuffer();
 }
 
-
-int saisir(const string& msgSaisie, int min, int max, const string& msgErreur) {
+template <typename T>
+T saisir(const string& msgSaisie, T min, T max, const string& msgErreur) {
    //Arrêt si min plus grand que max
    assert(min <= max);
 
-   int  entierSaisi;
+   T saisie;
    bool erreur;
 
    do {
-      cout << msgSaisie << " [" << min << ".." << max << "] : ";
-      cin  >> entierSaisi;
+      cout << msgSaisie << " [" << min << ".." << max << "] :";
+      cin  >> saisie;
 
       //Vérifie si la valeur se situe dans les bornes
-      erreur = cin.fail() || entierSaisi < min || entierSaisi > max;
+      erreur = cin.fail() || saisie < min || saisie > max;
       verifierSaisie(erreur, msgErreur);
    } while (erreur);
 
-   return entierSaisi;
+   return saisie;
 }
