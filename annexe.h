@@ -22,7 +22,9 @@ Compilateur     : Mingw-w64 g++ 11.2.0
 
 #include <string>
 
-//TODO Ajouter la fonction nbreAleatoire + fichier .h pour les fonctions génériques
+/* -------------------------------------------------------------------------------
+ *  Fonctions ordinaires
+ * -----------------------------------------------------------------------------*/
 
 /**
  * Affiche un message et met en pause le programme jusqu'à ce que l'utilisateur
@@ -32,11 +34,26 @@ Compilateur     : Mingw-w64 g++ 11.2.0
  */
 void pause(const std::string& message);
 
+//--------------------------------------------------------------------------------
+/**
+ * Vide le buffer
+ */
+void viderBuffer();
+
+//--------------------------------------------------------------------------------
+/**
+ * Initialise la seed pour la fonction rand()
+ */
+void initRand();
+
+/* -------------------------------------------------------------------------------
+ *  Fonctions génériques
+ * -----------------------------------------------------------------------------*/
 
 /**
  * Saisir dans un intervalle (saisie controllée)
  *
- * @tparam T        Type utilisé pour la saisie
+ * @tparam T        Type de la saisie
  * @param msgSaisie Message pour indiquer la saisie à effectuer
  * @param min       Valeur min
  * @param max       Valeur max
@@ -44,20 +61,23 @@ void pause(const std::string& message);
  * @return          Entier saisi
  */
 template <typename T>
-
 T saisir(const std::string& msgSaisie, T min, T max,
          const std::string& msgErreur = "");
 
-
+//--------------------------------------------------------------------------------
 /**
- * Vide le buffer
+ * Génère un nombre aléatoire entre [0, borneSup[
+ *
+ * @tparam T       Type du nombre généré
+ * @param borneSup Borne supérieure (non incluse)
+ * @return         Nombre semi-aléatoire
  */
-void viderBuffer();
+template <typename T>
+T nbreAleatoire(T borneSup) {
+   return (T) rand() % borneSup;
+}
 
-/**
- * Initialise la seed pour la fonction rand()
- */
-void initRand();
+//--------------------------------------------------------------------------------
 
 #include "annexe_def.h"
 

@@ -16,43 +16,25 @@ Compilateur     : Mingw-w64 g++ 11.2.0
 -------------------------------------------------------------------------------------
 */
 
-#include <iostream> //cout, cin
-#include <limits>   //numeric_limits
-#include <cassert>  //assert
+#include <iostream> // cout, cin
+#include <limits>   // numeric_limits
 
 #include "annexe.h"
 
 using namespace std;
 
+//--------------------------------------------------------------------------------
 void viderBuffer() {
    cin.ignore(numeric_limits<streamsize>::max(), '\n');
 }
 
+//--------------------------------------------------------------------------------
 void pause(const string& message) {
    cout << message;
    viderBuffer();
 }
 
-/**
- * Vérifie la saisie, si besoin répare le flux et affiche un message d'erreur
- *
- * @param erreur    Statut de l'erreur
- * @param msgErreur Message d'erreur
- */
-void verifierSaisie(bool erreur, const string& msgErreur) {
-   if (erreur) {
-      cout << msgErreur;
-
-      //Réparation du flux d'entrée cin
-      cin.clear();
-   }
-
-   viderBuffer();
-}
-
-/**
- * Initialise la seed pour la fonction rand()
- */
+//--------------------------------------------------------------------------------
 void initRand() {
    static bool init;
 
