@@ -76,14 +76,13 @@ public:
     *  Fonctions membres
     * -----------------------------------------------------------------------------*/
 
-   //TODO Changer saut en distance
    /**
     * Permet de déplacer un robot dans une direction défini
     *
     * @param direction  Direction dans laquelle on veut déplacer le robot
-    * @param saut       Permet de définir la distance de déplacement
+    * @param distance       Permet de définir la distance de déplacement
     */
-   void deplacer(Coordonnee::Direction direction, unsigned saut = 1);
+   void deplacer(Coordonnee::Direction direction, unsigned distance = 1);
 
    /**
     * Detruire un robot
@@ -97,7 +96,7 @@ private:
     * -----------------------------------------------------------------------------*/
 
    Coordonnee      _coordonnee;
-   const unsigned  _id;
+   unsigned        _id;
    static unsigned _idSuivant;
    bool            _estDetruit;
 };

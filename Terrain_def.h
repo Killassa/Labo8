@@ -21,15 +21,22 @@ Compilateur     : Mingw-w64 g++ 11.2.0
 #include <iostream>
 #include <iomanip>
 
+#include "annexe.h"
+
 using namespace std;
 
 /* -------------------------------------------------------------------------------
  *  Déclaration des fonctions internes
  * -----------------------------------------------------------------------------*/
 
-// Génère la limite verticale (longueur du terrain + 2 limites horizontales)
+/**
+ *
+ * @tparam T
+ * @param largeur
+ */
 template <typename T>
 void afficherLimiteVert(T largeur);
+
 
 /* -------------------------------------------------------------------------------
  *  Opérateurs
@@ -38,7 +45,7 @@ void afficherLimiteVert(T largeur);
 //TODO Revoir l'algorithmie pour économiser la mémoire et être plus efficace
 template <typename T>
 ostream& operator<<(ostream& os, const Terrain<T>& terrain) {
-   afficherLimiteVert<unsigned>(terrain._largeur);
+   afficherLimiteVert<unsigned>(terrain._largeur + 2);
 
    for (unsigned ligne = 0; ligne < terrain._hauteur; ++ligne) {
       // String représentant une ligne sans objets
@@ -60,7 +67,7 @@ ostream& operator<<(ostream& os, const Terrain<T>& terrain) {
       // Affiche la ligne avec les bordures et les robots
       os << "|" << contenu << "|" << endl;
    }
-   afficherLimiteVert<unsigned>(terrain._largeur);
+   afficherLimiteVert<unsigned>(terrain._largeur + 2);
    return os;
 }
 
@@ -76,10 +83,126 @@ Terrain<T>::Terrain(unsigned largeur, unsigned hauteur)
  *  Fonctions membres
  * -----------------------------------------------------------------------------*/
 
+/**
+ *
+ * @tparam T
+ * @param objet
+ */
 template <typename T>
 void Terrain<T>::ajoutObjet(const T& objet) {
    _objets.push_back(objet);
 }
+
+
+/**
+ * Créé un nouvel objet qui ne recouvre aucun des objets existant sur le terrain
+ *
+ * @tparam T
+ * @param terrain
+ * @return
+ */
+template <typename T>
+T Terrain<T>::nouvelObjet() {
+
+   // Impossible de créer plus d'objets qu'il n'y a de cases
+   assert(_objets.size() < _largeur * _hauteur);
+
+   Coordonnee coordonnee;
+
+   // Contrôle si la position de l'objet ne recouvre aucun autre objet
+   do {
+      // Générations de positions aléatoires dans les limites du terrain
+      coordonnee.setPosX(nbreAleatoire(_largeur));
+      coordonnee.setPosY(nbreAleatoire(_hauteur));
+
+      // Pas de contrôle de recouvrement s'il y a moins de 2 objets
+      if ((_objets).size() < 2) {break;}
+
+   } while(any_of((_objets).cbegin(), (_objets).cend(),
+                  [coordonnee](const T& elem){return coordonnee == elem.getCoordonnee();}));
+
+   T objet(coordonnee);
+
+   return objet;
+}
+
+
+/**
+ *
+ * @tparam T
+ * @param terrain
+ * @param distance
+ */
+template <typename T>
+void Terrain<T>::deplacerObjets(unsigned distance) {
+   unsigned positionInitiale = 0;
+
+   for(T& objet : _objets) {
+      if (objet.getEstDetruit()) continue;
+
+      Coordonnee::Direction direction;
+      bool estDeplacable;
+
+      do {
+         //Prend une direction parmi toutes les directions possibles
+         direction = (Coordonnee::Direction)nbreAleatoire((int)Coordonnee::Direction::LEFT + 1);
+
+         switch (direction) {
+            case Coordonnee::Direction::UP:
+               estDeplacable = objet.getCoordonnee().getPosY() - distance > positionInitiale;
+               break;
+            case Coordonnee::Direction::DOWN:
+               estDeplacable = objet.getCoordonnee().getPosY() + distance < _hauteur;
+               break;
+            case Coordonnee::Direction::RIGHT:
+               estDeplacable = objet.getCoordonnee().getPosX() + distance < _largeur;
+               break;
+            case Coordonnee::Direction::LEFT:
+               estDeplacable = objet.getCoordonnee().getPosX() - distance > positionInitiale;
+               break;
+         }
+      }while(!estDeplacable);
+
+      objet.deplacer(direction, distance);
+
+      //Destruction de l'objet précédemment présent
+      for(T& aDetruire : _objets) {
+         if (aDetruire.getEstDetruit() || aDetruire.getId() == objet.getId())
+            continue;
+
+         if (aDetruire.getCoordonnee() == objet.getCoordonnee()) {
+            aDetruire.destruction();
+            break;
+         }
+      }
+   }
+}
+
+
+/**
+ *
+ * @tparam T
+ * @param terrain
+ */
+template <typename T>
+void Terrain<T>::supprimerObjets() {
+   auto it = remove_if(_objets.begin(), _objets.end(),
+                       [](T objet) { return objet.getEstDetruit(); });
+   _objets.erase(it, _objets.end());
+}
+
+
+/**
+ *
+ * @tparam T
+ * @param terrain
+ * @return
+ */
+template <typename T>
+bool Terrain<T>::estTermine() {
+   return _objets.size() == 1;
+}
+
 
 /* -------------------------------------------------------------------------------
  *  Définition des fonctions internes
@@ -87,7 +210,7 @@ void Terrain<T>::ajoutObjet(const T& objet) {
 
 template <typename T>
 void afficherLimiteVert(T largeur) {
-   cout << setfill('-') << setw((int) largeur) << endl;
+   cout << setfill('-') << setw(largeur + 1) << '\n';
 }
 
 #endif //TERRAIN_DEF_H

@@ -37,19 +37,19 @@ Coordonnee::Coordonnee(unsigned posX, unsigned posY) : _posX(posX), _posY(posY) 
  *  Fonctions membres
  * -----------------------------------------------------------------------------*/
 
-void Coordonnee::deplacer(Coordonnee::Direction direction, unsigned saut) {
+void Coordonnee::deplacer(Coordonnee::Direction direction, unsigned distance) {
    switch (direction) {
       case Direction::UP:
-         _posY += saut;
+         _posY -= distance;
          break;
       case Direction::DOWN:
-         _posY -= saut;
+         _posY += distance;
          break;
       case Direction::RIGHT:
-         _posX += saut;
+         _posX += distance;
          break;
       case Direction::LEFT:
-         _posX -= saut;
+         _posX -= distance;
          break;
    }
 }
@@ -62,6 +62,14 @@ unsigned Coordonnee::getPosX() const {
    return _posX;
 }
 
+void Coordonnee::setPosX(unsigned value) {
+   _posX = value;
+}
+
 unsigned Coordonnee::getPosY() const {
    return _posY;
+}
+
+void Coordonnee::setPosY(unsigned value) {
+   _posY = value;
 }

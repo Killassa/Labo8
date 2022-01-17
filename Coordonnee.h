@@ -30,10 +30,6 @@ class Coordonnee {
    // Permet à la classe Robot d'accéder aux coordonnées X et Y
    friend class Robot;
 
-   // Créé un nouvel objet avec des coordonnées aléatoires
-   template <typename T>
-   friend T nouvelObjet(const Terrain<T>& terrain);
-
    /**
     * Opérateur de comparaison d'une coordonnée
     *
@@ -75,7 +71,7 @@ public:
     * @param direction La direction dans laquelle le déplacement est effectué
     * @param saut      Le nombre d'unité de déplacement
     */
-   void deplacer(Direction direction, unsigned saut = 1);
+   void deplacer(Direction direction, unsigned distance = 1);
 
    /* -------------------------------------------------------------------------------
     *  Accesseurs
@@ -89,11 +85,27 @@ public:
    unsigned getPosX() const;
 
    /**
+    * Permet d'écrire la valeur X de la coordonnée
+    *
+    * @param value  Nouvelle valeur de X
+    * @return       Coordonnée X
+    */
+   void setPosX(unsigned value);
+
+   /**
     * Permet de lire la valeur de Y de la coordonnée
     *
     * @return Coordonnée Y
     */
    unsigned getPosY() const;
+
+   /**
+    * Permet d'écrire la valeur Y de la coordonnée
+    *
+    * @param value  Nouvelle valeur de Y
+    * @return       Coordonnée Y
+    */
+   void setPosY(unsigned value);
 
 
 private:

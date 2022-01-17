@@ -16,10 +16,10 @@ Compilateur     : Mingw-w64 g++ 11.2.0
 */
 #include <cstdlib>
 #include <iostream>
+#include <thread>    //this_thread::sleep_for(...)
 
 #include "annexe.h"
 #include "Robot.h"
-#include "Survivor.h"
 #include "Terrain.h"
 
 using namespace std;
@@ -60,6 +60,9 @@ int main() {
    const unsigned MIN_ROBOT   = 1;     //Nombre minimal d'objets
    const unsigned MAX_ROBOT   = 9;     //Nombre maximal d'objets
 
+   //Temps d'attente pour l'affichage en miliseconde
+   const chrono::duration ATTENTE = 1000ms;
+
 
    /* -------------------------------------------------------------------------------
     *  Introduction au programme
@@ -82,10 +85,20 @@ int main() {
    Terrain<Robot> terrain(LARGEUR, HAUTEUR);
 
    for (unsigned nbObjets = 0; nbObjets < NBRE_OBJETS; ++nbObjets) {
-      terrain.ajoutObjet(nouvelObjet(terrain));
+      terrain.ajoutObjet(terrain.nouvelObjet());
    }
-
    cout << terrain << endl;
+
+   do {
+      terrain.deplacerObjets();
+      terrain.supprimerObjets();
+
+      std::this_thread::sleep_for(ATTENTE);
+      system("cls");
+
+      cout << terrain << endl;
+   }while(!terrain.estTermine());
+
 
    /* -------------------------------------------------------------------------------
     *  Message de fin

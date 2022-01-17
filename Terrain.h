@@ -30,17 +30,37 @@ using Objets = std::vector<T>;
 
 template <typename T>
 class Terrain {
-   friend T nouvelObjet<T>(const Terrain<T>& terrain);
-
-   // Affiche les bordures du terrain ainsi que les objets sur ce dernier
+   /**
+    *
+    * @param os
+    * @param terrain
+    */
    friend std::ostream& operator<< <T>(std::ostream& os, const Terrain<T>& terrain);
 
 public:
-   // Constructeur d'initialisation
+   /**
+    * Constructeur d'initialisation
+    *
+    * @param largeur
+    * @param hauteur
+    */
    Terrain(unsigned largeur, unsigned hauteur);
 
-   // Ajoute un objet sur le terrain
+   /**
+    * Ajoute un objet sur le terrain
+    *
+    * @param objet
+    */
    void ajoutObjet(const T& objet);
+
+
+   T nouvelObjet();
+
+   void deplacerObjets(unsigned distance = 1);
+
+   void supprimerObjets();
+
+   bool estTermine();
 
 private:
    const unsigned _largeur, _hauteur;

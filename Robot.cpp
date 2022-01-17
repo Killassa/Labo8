@@ -46,8 +46,8 @@ bool Robot::getEstDetruit() const {
  *  Fonctions membres
  * -----------------------------------------------------------------------------*/
 
-void Robot::deplacer(Coordonnee::Direction direction, unsigned saut) {
-   _coordonnee.deplacer(direction, saut);
+void Robot::deplacer(Coordonnee::Direction direction, unsigned distance) {
+   _coordonnee.deplacer(direction, distance);
 }
 
 void Robot::destruction() {
