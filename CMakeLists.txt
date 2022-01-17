@@ -11,7 +11,5 @@ add_executable(labo8 main.cpp
                      Coordonnee.h
                      Robot.cpp
                      Robot.h
-        Survivor_def.h
-                     Survivor.h
                      Terrain_def.h
                      Terrain.h)
