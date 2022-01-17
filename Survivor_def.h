@@ -19,7 +19,6 @@ Compilateur     : Mingw-w64 g++ 11.2.0
 #include <algorithm>
 #include <cassert>
 #include "Coordonnee.h"
-#include "Survivor.h"
 
 #include "Robot.h"
 using namespace std;
@@ -54,10 +53,10 @@ T nouvelObjet(const Terrain<T>& terrain) {
       coordonnee._posY = nbreAleatoire(terrain._hauteur);
 
       // Pas de contrôle de recouvrement s'il y a moins de 2 objets
-      if ((terrain._conteneur).size() < 2) {break;}
+      if ((terrain._objets).size() < 2) {break;}
 
    } while(any_of((terrain._objets).cbegin(), (terrain._objets).cend(),
-                  [coordonnee](const T& elem){return coordonnee == elem;}));
+                  [coordonnee](const T& elem){return coordonnee == elem.getCoordonnee();}));
 
    T objet(coordonnee);
 

@@ -30,10 +30,10 @@ using Objets = std::vector<T>;
 
 template <typename T>
 class Terrain {
-   friend T nouvelObjet(const Terrain& terrain);
+   friend T nouvelObjet<T>(const Terrain<T>& terrain);
 
    // Affiche les bordures du terrain ainsi que les objets sur ce dernier
-   friend std::ostream& operator<<(std::ostream& os, const Terrain& terrain);
+   friend std::ostream& operator<< <T>(std::ostream& os, const Terrain<T>& terrain);
 
 public:
    // Constructeur d'initialisation

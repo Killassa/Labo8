@@ -22,8 +22,6 @@ Compilateur     : Mingw-w64 g++ 11.2.0
 #include <limits>   //numeric_limits
 #include <cassert>  //assert
 
-#include "annexe.h"
-
 void verifierSaisie(bool erreur, const std::string& msgErreur);
 
 template <typename T>

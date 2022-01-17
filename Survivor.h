@@ -25,4 +25,6 @@ Compilateur     : Mingw-w64 g++ 11.2.0
 template <typename T>
 T nouvelObjet(const Terrain<T>& terrain);
 
+#include "Survivor_def.h"
+
 #endif //SURVIVOR_H

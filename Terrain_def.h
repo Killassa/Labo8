@@ -48,11 +48,11 @@ ostream& operator<<(ostream& os, const Terrain<T>& terrain) {
 
       // Pour chaque ligne, chercher si une des position Y correspond à la ligne
       while((first = find_if(first, terrain._objets.cend(),
-                             [ligne](const T& obj){return obj._posY == ligne;}))
+                             [ligne](const T& obj){return obj.getCoordonnee().getPosY() == ligne;}))
             != terrain._objets.cend()) {
          // Remplace les " " par l'ID du robot (len = nb de digits de l'ID)
          string id = to_string(first->_id);
-         contenu.replace(first->_posX, id.length(), id);
+         contenu.replace(first->getCoordonnee().getPosX(), id.length(), id);
 
          // Continue la recherche après l'occurrence en cours
          ++first;

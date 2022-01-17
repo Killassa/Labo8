@@ -96,11 +96,6 @@ private:
     *  Données membres
     * -----------------------------------------------------------------------------*/
 
-   //TODO Direction est une propriété de robot plutôt que coordonnée?
-
-   // Directions de déplacement d'un robot
-   enum class Directions {UP, DOWN, RIGHT, LEFT} _direction;
-
    Coordonnee      _coordonnee;
    const unsigned  _id;
    static unsigned _idSuivant;

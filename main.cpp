@@ -81,7 +81,7 @@ int main() {
    // Initialisation du terrain
    Terrain<Robot> terrain(LARGEUR, HAUTEUR);
 
-   for (unsigned nbRobots = 0; nbRobots < NBRE_OBJETS; ++nbRobots) {
+   for (unsigned nbObjets = 0; nbObjets < NBRE_OBJETS; ++nbObjets) {
       terrain.ajoutObjet(nouvelObjet(terrain));
    }
 
