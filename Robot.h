@@ -54,27 +54,34 @@ public:
    /**
     * Permet de lire les coordonnées du robot
     *
-    * @return
+    * @return   Coordonnées du robot
     */
    Coordonnee getCoordonnee() const;
 
    /**
     * Permet de lire l'ID du robot
     *
-    * @return
+    * @return   ID du robot
     */
    unsigned getId() const;
 
    /**
     * Permet de lire si le robot est détruit
     *
-    * @return
+    * @return   Si le robot est détruit ou non
     */
    bool getEstDetruit() const;
 
    /* -------------------------------------------------------------------------------
     *  Fonctions membres
     * -----------------------------------------------------------------------------*/
+   /**
+    * Opérateur d'affectation par copie d'un robot
+    *
+    * @param robot  Robot à copier
+    * @return       Robot actuel
+    */
+   Robot& operator=(const Robot& robot);
 
    /**
     * Permet de déplacer un robot dans une direction défini
@@ -89,16 +96,21 @@ public:
     */
    void destruction();
 
+   /**
+    * Réparer un robot
+    */
+   void reparation();
+
 
 private:
    /* -------------------------------------------------------------------------------
     *  Données membres
     * -----------------------------------------------------------------------------*/
 
-   Coordonnee      _coordonnee;
-   unsigned        _id;
-   static unsigned _idSuivant;
-   bool            _estDetruit;
+   const  unsigned   _id;        //L'ID unique du robot
+   static unsigned   _idSuivant; //ID pour le robot suivant
+          Coordonnee _coordonnee;//Les coordonnées du Robot
+          bool       _estDetruit;//Indique si le robot est détruit ou non
 };
 
 #endif //ROBOT_H

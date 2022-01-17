@@ -26,30 +26,20 @@ class Coordonnee {
    /* -------------------------------------------------------------------------------
     *  Fonctions amies
     * -----------------------------------------------------------------------------*/
+   template <typename T>
+   friend class Terrain;
 
-   // Permet à la classe Robot d'accéder aux coordonnées X et Y
-   friend class Robot;
-
-   /**
-    * Opérateur de comparaison d'une coordonnée
-    *
-    * @param coordonnee Coordonnée avec laquelle on fait une comparaison
-    * @return           True  : Les coordonnées sont identiques
-    *                   False : Les coordéonnes sont différentes
-    */
-   friend bool operator==(const Coordonnee& lhs, const Coordonnee& rhs);
 
 public:
    //Les directions de déplacement d'une coordonnée
    enum class Direction {UP, DOWN, RIGHT, LEFT};
 
+
    /* -------------------------------------------------------------------------------
     *  Constructeurs et destructeur
     * -----------------------------------------------------------------------------*/
-
    /**
     * Constructeur par défaut
-    *
     */
    Coordonnee();
 
@@ -61,9 +51,20 @@ public:
     */
    Coordonnee(unsigned posX, unsigned posY);
 
+
+
    /* -------------------------------------------------------------------------------
     *  Fonctions membres
     * -----------------------------------------------------------------------------*/
+   /**
+    * Opérateur de comparaison d'une coordonnée
+    *
+    * @param coordonnee Coordonnée avec laquelle on fait une comparaison
+    * @return           True  : Les coordonnées sont identiques
+    *                   False : Les coordéonnes sont différentes
+    */
+   bool operator==(const Coordonnee& coordonnee) const;
+
 
    /**
     * Déplacement d'une coordonnées sur un axe
@@ -73,10 +74,11 @@ public:
     */
    void deplacer(Direction direction, unsigned distance = 1);
 
+
+
    /* -------------------------------------------------------------------------------
     *  Accesseurs
     * -----------------------------------------------------------------------------*/
-
    /**
     * Permet de lire la valeur de X de la coordonnée
     *
@@ -85,27 +87,11 @@ public:
    unsigned getPosX() const;
 
    /**
-    * Permet d'écrire la valeur X de la coordonnée
-    *
-    * @param value  Nouvelle valeur de X
-    * @return       Coordonnée X
-    */
-   void setPosX(unsigned value);
-
-   /**
     * Permet de lire la valeur de Y de la coordonnée
     *
     * @return Coordonnée Y
     */
    unsigned getPosY() const;
-
-   /**
-    * Permet d'écrire la valeur Y de la coordonnée
-    *
-    * @param value  Nouvelle valeur de Y
-    * @return       Coordonnée Y
-    */
-   void setPosY(unsigned value);
 
 
 private:

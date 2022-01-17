@@ -31,6 +31,7 @@ using namespace std;
 
 /**
  *
+ *
  * @tparam T
  * @param largeur
  */
@@ -82,25 +83,11 @@ Terrain<T>::Terrain(unsigned largeur, unsigned hauteur)
 /* -------------------------------------------------------------------------------
  *  Fonctions membres
  * -----------------------------------------------------------------------------*/
-
-/**
- *
- * @tparam T
- * @param objet
- */
 template <typename T>
 void Terrain<T>::ajoutObjet(const T& objet) {
    _objets.push_back(objet);
 }
 
-
-/**
- * Créé un nouvel objet qui ne recouvre aucun des objets existant sur le terrain
- *
- * @tparam T
- * @param terrain
- * @return
- */
 template <typename T>
 T Terrain<T>::nouvelObjet() {
 
@@ -112,8 +99,8 @@ T Terrain<T>::nouvelObjet() {
    // Contrôle si la position de l'objet ne recouvre aucun autre objet
    do {
       // Générations de positions aléatoires dans les limites du terrain
-      coordonnee.setPosX(nbreAleatoire(_largeur));
-      coordonnee.setPosY(nbreAleatoire(_hauteur));
+      coordonnee._posX = nbreAleatoire(_largeur);
+      coordonnee._posY = nbreAleatoire(_hauteur);
 
       // Pas de contrôle de recouvrement s'il y a moins de 2 objets
       if ((_objets).size() < 2) {break;}
@@ -126,13 +113,6 @@ T Terrain<T>::nouvelObjet() {
    return objet;
 }
 
-
-/**
- *
- * @tparam T
- * @param terrain
- * @param distance
- */
 template <typename T>
 void Terrain<T>::deplacerObjets(unsigned distance) {
    unsigned positionInitiale = 0;
@@ -178,12 +158,6 @@ void Terrain<T>::deplacerObjets(unsigned distance) {
    }
 }
 
-
-/**
- *
- * @tparam T
- * @param terrain
- */
 template <typename T>
 void Terrain<T>::supprimerObjets() {
    auto it = remove_if(_objets.begin(), _objets.end(),
@@ -191,13 +165,6 @@ void Terrain<T>::supprimerObjets() {
    _objets.erase(it, _objets.end());
 }
 
-
-/**
- *
- * @tparam T
- * @param terrain
- * @return
- */
 template <typename T>
 bool Terrain<T>::estTermine() {
    return _objets.size() == 1;

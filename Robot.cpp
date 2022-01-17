@@ -45,6 +45,13 @@ bool Robot::getEstDetruit() const {
 /* -------------------------------------------------------------------------------
  *  Fonctions membres
  * -----------------------------------------------------------------------------*/
+Robot& Robot::operator=(const Robot& robot) {
+   //cast en non constant pour permettre le changement de valeur
+   (unsigned &)this->_id = robot._id;
+
+   this->_coordonnee = robot._coordonnee;
+   return *this;
+}
 
 void Robot::deplacer(Coordonnee::Direction direction, unsigned distance) {
    _coordonnee.deplacer(direction, distance);
@@ -54,8 +61,11 @@ void Robot::destruction() {
    _estDetruit = true;
 }
 
+void Robot::reparation() {
+   _estDetruit = false;
+}
+
 /* -------------------------------------------------------------------------------
  *  Données membres
  * -----------------------------------------------------------------------------*/
-
 unsigned Robot::_idSuivant = 1;

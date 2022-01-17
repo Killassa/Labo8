@@ -23,8 +23,6 @@ Compilateur     : Mingw-w64 g++ 11.2.0
 #include <vector>
 #include <ostream>
 
-//TODO Créer un fichier .h pour les déclarations génériques
-
 template <typename T>
 using Objets = std::vector<T>;
 
@@ -53,13 +51,32 @@ public:
     */
    void ajoutObjet(const T& objet);
 
-
+   /**
+    *
+    * @return
+    */
    T nouvelObjet();
 
+   /**
+    * Déplace tous les objets contenus dans le terrain
+    *
+    * @param distance   La distance utilisée pour le déplacement des objets
+    *                   (Défaut : 1)
+    */
    void deplacerObjets(unsigned distance = 1);
 
+   /**
+    * Supprime un objet présent si un autre objet vient se positionner sur lui
+    */
    void supprimerObjets();
 
+   /**
+    * Indique si le déplacement des objets dans le terminé, lorsqu'il ne reste plus
+    * qu'un objet non détruit dans la liste d'objets du terrain
+    *
+    * @return   True  : Il ne reste qu'un objet dans la liste d'objets
+    *           False : Il reste plusieurs objets dans la liste d'objets
+    */
    bool estTermine();
 
 private:

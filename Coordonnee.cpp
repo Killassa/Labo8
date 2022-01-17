@@ -16,26 +16,21 @@ Compilateur     : Mingw-w64 g++ 11.2.0
 */
 
 #include "Coordonnee.h"
-
-/* -------------------------------------------------------------------------------
- *  Fonctions amies
- * -----------------------------------------------------------------------------*/
-
-bool operator==(const Coordonnee& lhs, const Coordonnee& rhs) {
-   return lhs._posX == rhs._posX and lhs._posY == rhs._posY;
-}
-
 /* -------------------------------------------------------------------------------
  *  Constructeurs et destructeur
  * -----------------------------------------------------------------------------*/
-
 Coordonnee::Coordonnee() : Coordonnee(0, 0) {}
 
 Coordonnee::Coordonnee(unsigned posX, unsigned posY) : _posX(posX), _posY(posY) {}
 
+
+
 /* -------------------------------------------------------------------------------
  *  Fonctions membres
  * -----------------------------------------------------------------------------*/
+bool Coordonnee::operator==(const Coordonnee& coordonnee) const {
+   return this->_posX == coordonnee._posX and this->_posY == coordonnee._posY;
+}
 
 void Coordonnee::deplacer(Coordonnee::Direction direction, unsigned distance) {
    switch (direction) {
@@ -54,22 +49,15 @@ void Coordonnee::deplacer(Coordonnee::Direction direction, unsigned distance) {
    }
 }
 
+
+
 /* -------------------------------------------------------------------------------
  *  Accesseurs
  * -----------------------------------------------------------------------------*/
-
 unsigned Coordonnee::getPosX() const {
    return _posX;
 }
 
-void Coordonnee::setPosX(unsigned value) {
-   _posX = value;
-}
-
 unsigned Coordonnee::getPosY() const {
    return _posY;
-}
-
-void Coordonnee::setPosY(unsigned value) {
-   _posY = value;
 }

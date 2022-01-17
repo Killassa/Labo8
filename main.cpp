@@ -61,7 +61,7 @@ int main() {
    const unsigned MAX_ROBOT   = 9;     //Nombre maximal d'objets
 
    //Temps d'attente pour l'affichage en miliseconde
-   const chrono::duration ATTENTE = 1000ms;
+   const chrono::duration ATTENTE = 250ms;
 
 
    /* -------------------------------------------------------------------------------
@@ -84,16 +84,18 @@ int main() {
    // Initialisation du terrain
    Terrain<Robot> terrain(LARGEUR, HAUTEUR);
 
+   //Remplissage d'un terrain avec des objets
    for (unsigned nbObjets = 0; nbObjets < NBRE_OBJETS; ++nbObjets) {
       terrain.ajoutObjet(terrain.nouvelObjet());
    }
    cout << terrain << endl;
 
+   //Boucle de jeu
    do {
       terrain.deplacerObjets();
       terrain.supprimerObjets();
 
-      std::this_thread::sleep_for(ATTENTE);
+      this_thread::sleep_for(ATTENTE);
       system("cls");
 
       cout << terrain << endl;
