@@ -5,8 +5,7 @@ Nom du labo     : Labo 8 - Survivor
 Auteur(s)       : Grégory Rey-Mermet, Cédric Rosat
 Date creation   : 14.01.2022
 
-Description     : Ce fichier implémente diverses fonctions utiles dont l'on pourrait
-                  avoir besoin dans une multitude de projets différents.
+Description     : Implémentation des fonctions génériques.
 
 Remarque(s)     : -
 
