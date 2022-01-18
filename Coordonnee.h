@@ -19,17 +19,8 @@ Compilateur     : Mingw-w64 g++ 11.2.0
 #ifndef COORDONNEE_H
 #define COORDONNEE_H
 
-template <typename T>
-class Terrain;
 
 class Coordonnee {
-   /* -------------------------------------------------------------------------------
-    *  Fonctions amies
-    * -----------------------------------------------------------------------------*/
-   template <typename T>
-   friend class Terrain;
-
-
 public:
    //Les directions de déplacement d'une coordonnée
    enum class Direction {UP, DOWN, RIGHT, LEFT};

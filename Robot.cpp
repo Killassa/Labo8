@@ -24,7 +24,7 @@ using namespace std;
  * -----------------------------------------------------------------------------*/
 
 Robot::Robot(const Coordonnee& coordonnee)
-: _coordonnee(coordonnee), _id(_idSuivant++), _estDetruit(false) {}
+: _id(_idSuivant++), _coordonnee(coordonnee), _estDetruit(false) {}
 
 /* -------------------------------------------------------------------------------
  *  Accesseurs

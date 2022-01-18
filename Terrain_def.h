@@ -99,8 +99,7 @@ T Terrain<T>::nouvelObjet() {
    // Contrôle si la position de l'objet ne recouvre aucun autre objet
    do {
       // Générations de positions aléatoires dans les limites du terrain
-      coordonnee._posX = nbreAleatoire(_largeur);
-      coordonnee._posY = nbreAleatoire(_hauteur);
+      coordonnee = Coordonnee(nbreAleatoire(_largeur), nbreAleatoire(_hauteur));
 
       // Pas de contrôle de recouvrement s'il y a moins de 2 objets
       if ((_objets).size() < 2) {break;}
