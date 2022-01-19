@@ -61,7 +61,7 @@ std::ostream& operator<<(std::ostream& os, const Terrain<T>& terrain) {
                              [ligne](const T& obj){return obj.getCoordonnee().getPosY() == ligne;}))
             != terrain._objets.cend()) {
          // Remplace les " " par l'ID du robot (len = nb de digits de l'ID)
-         std::string id = to_string(first->_id);
+         std::string id = std::to_string(first->_id);
          contenu.replace(first->getCoordonnee().getPosX(), id.length(), id);
 
          // Continue la recherche après l'occurrence en cours
@@ -182,7 +182,7 @@ bool Terrain<T>::estTermine() {
 
 template <typename T>
 void afficherLimiteVert(T largeur, char caractere) {
-   std::cout << std::setfill(caractere) << setw(largeur + 1) << '\n';
+   std::cout << std::setfill(caractere) << std::setw((int) largeur + 1) << '\n';
 }
 
 #endif //TERRAIN_DEF_H

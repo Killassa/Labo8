@@ -61,7 +61,7 @@ int main() {
    const unsigned MAX_ROBOT   = 9;     //Nombre maximal d'objets
 
    //Temps d'attente pour l'affichage en miliseconde
-   const chrono::duration ATTENTE = 250ms;
+   const chrono::duration ATTENTE = 1000ms;
 
 
    /* -------------------------------------------------------------------------------
