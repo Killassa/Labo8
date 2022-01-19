@@ -36,6 +36,9 @@ class Robot {
    friend std::ostream& operator<<(std::ostream& os, const Terrain<T>& terrain);
 
 public:
+   //Les directions de déplacement du robot
+   enum class Direction {UP, DOWN, RIGHT, LEFT};
+
    /* -------------------------------------------------------------------------------
    *  Constructeurs et destructeur
    * -----------------------------------------------------------------------------*/
@@ -45,7 +48,13 @@ public:
     *
     * @param coordonnee     Les coordonnées de création du robot
     */
-   Robot(const Coordonnee& coordonnee);
+   explicit Robot(const Coordonnee& coordonnee);
+
+   /**
+    *
+    * @param robot
+    */
+   Robot(const Robot& robot) = default;
 
    /* -------------------------------------------------------------------------------
     *  Accesseurs
@@ -89,7 +98,7 @@ public:
     * @param direction  Direction dans laquelle on veut déplacer le robot
     * @param distance       Permet de définir la distance de déplacement
     */
-   void deplacer(Coordonnee::Direction direction, unsigned distance = 1);
+   void deplacer(Direction direction, unsigned distance = 1);
 
    /**
     * Detruire un robot
@@ -107,10 +116,13 @@ private:
     *  Données membres
     * -----------------------------------------------------------------------------*/
 
-   const  unsigned   _id;        //L'ID unique du robot
-   static unsigned   _idSuivant; //ID pour le robot suivant
-          Coordonnee _coordonnee;//Les coordonnées du Robot
-          bool       _estDetruit;//Indique si le robot est détruit ou non
+   Coordonnee _coordonnee;       // Les coordonnées du Robot
+   Direction  _direction;        // Direction de déplacement du robot
+   bool       _estDetruit;       // Indique si le robot est détruit ou non
+   const  unsigned   _id;        // L'ID unique du robot
+
+   static unsigned   _idSuivant; // ID pour le robot suivant
+
 };
 
 #endif //ROBOT_H

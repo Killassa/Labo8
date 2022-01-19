@@ -24,7 +24,8 @@ using namespace std;
  * -----------------------------------------------------------------------------*/
 
 Robot::Robot(const Coordonnee& coordonnee)
-: _id(_idSuivant++), _coordonnee(coordonnee), _estDetruit(false) {}
+: _coordonnee(coordonnee), _direction(Direction::UP), _estDetruit(false),
+  _id(_idSuivant++) {}
 
 /* -------------------------------------------------------------------------------
  *  Accesseurs
@@ -34,10 +35,12 @@ Coordonnee Robot::getCoordonnee() const {
    return _coordonnee;
 }
 
+//--------------------------------------------------------------------------------
 unsigned Robot::getId() const {
    return _id;
 }
 
+//--------------------------------------------------------------------------------
 bool Robot::getEstDetruit() const {
    return _estDetruit;
 }
@@ -53,14 +56,30 @@ Robot& Robot::operator=(const Robot& robot) {
    return *this;
 }
 
-void Robot::deplacer(Coordonnee::Direction direction, unsigned distance) {
-   _coordonnee.deplacer(direction, distance);
+//--------------------------------------------------------------------------------
+void Robot::deplacer(Direction direction, unsigned distance) {
+   switch (direction) {
+      case Direction::UP:
+         _coordonnee.setPosY(_coordonnee.getPosY() + distance);
+         break;
+      case Direction::DOWN:
+         _coordonnee.setPosY(_coordonnee.getPosY() - distance);
+         break;
+      case Direction::RIGHT:
+         _coordonnee.setPosX(_coordonnee.getPosX() + distance);
+         break;
+      case Direction::LEFT:
+         _coordonnee.setPosX(_coordonnee.getPosX() - distance);
+         break;
+   }
 }
 
+//--------------------------------------------------------------------------------
 void Robot::destruction() {
    _estDetruit = true;
 }
 
+//--------------------------------------------------------------------------------
 void Robot::reparation() {
    _estDetruit = false;
 }

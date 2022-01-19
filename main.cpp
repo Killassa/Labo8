@@ -61,7 +61,7 @@ int main() {
    const unsigned MAX_ROBOT   = 9;     //Nombre maximal d'objets
 
    //Temps d'attente pour l'affichage en miliseconde
-   const chrono::duration ATTENTE = 250ms;
+   const chrono::duration ATTENTE = 1000ms;
 
 
    /* -------------------------------------------------------------------------------
@@ -96,7 +96,7 @@ int main() {
       terrain.supprimerObjets();
 
       this_thread::sleep_for(ATTENTE);
-      system("cls");
+      system("clear");
 
       cout << terrain << endl;
    }while(!terrain.estTermine());

@@ -35,11 +35,8 @@ Compilateur     : Mingw-w64 g++ 11.2.0
  * @param largeur
  * @param caractere
  */
- //TODO Ne devrait pas être générique car la largeur est unisgned de toute façon
- // mais ça nécessite un fichier .cpp uniquement pour cette fonction...
 template <typename T>
 void afficherLimiteVert(T largeur, char caractere = '-');
-
 
 /* -------------------------------------------------------------------------------
  *  Opérateurs
@@ -48,7 +45,7 @@ void afficherLimiteVert(T largeur, char caractere = '-');
 //TODO Revoir l'algorithmie pour économiser la mémoire et être plus efficace
 template <typename T>
 std::ostream& operator<<(std::ostream& os, const Terrain<T>& terrain) {
-   afficherLimiteVert<unsigned>(terrain._largeur + 2);
+   afficherLimiteVert(terrain._largeur + 2U);
 
    for (unsigned ligne = 0; ligne < terrain._hauteur; ++ligne) {
       // String représentant une ligne sans objets
@@ -61,7 +58,7 @@ std::ostream& operator<<(std::ostream& os, const Terrain<T>& terrain) {
                              [ligne](const T& obj){return obj.getCoordonnee().getPosY() == ligne;}))
             != terrain._objets.cend()) {
          // Remplace les " " par l'ID du robot (len = nb de digits de l'ID)
-         std::string id = to_string(first->_id);
+         std::string id = std::to_string(first->_id);
          contenu.replace(first->getCoordonnee().getPosX(), id.length(), id);
 
          // Continue la recherche après l'occurrence en cours
@@ -70,7 +67,7 @@ std::ostream& operator<<(std::ostream& os, const Terrain<T>& terrain) {
       // Affiche la ligne avec les bordures et les robots
       os << "|" << contenu << "|" << std::endl;
    }
-   afficherLimiteVert<unsigned>(terrain._largeur + 2);
+   afficherLimiteVert(terrain._largeur + 2U);
    return os;
 }
 
@@ -85,13 +82,13 @@ Terrain<T>::Terrain(unsigned largeur, unsigned hauteur)
 /* -------------------------------------------------------------------------------
  *  Fonctions membres
  * -----------------------------------------------------------------------------*/
+
 template <typename T>
 void Terrain<T>::ajoutObjet(const T& objet) {
    _objets.push_back(objet);
 }
 
-//TODO nouvelObjet implique la copie d'un objet -> coordAleatoires pour économiser
-// de la mémoire ?
+//--------------------------------------------------------------------------------
 template <typename T>
 T Terrain<T>::nouvelObjet() {
 
@@ -116,6 +113,7 @@ T Terrain<T>::nouvelObjet() {
    return objet;
 }
 
+//--------------------------------------------------------------------------------
 template <typename T>
 void Terrain<T>::deplacerObjets(unsigned distance) {
    unsigned posInitiale = 0;
@@ -123,26 +121,30 @@ void Terrain<T>::deplacerObjets(unsigned distance) {
    for(T& objet : _objets) {
       if (objet.getEstDetruit()) continue;
 
-      Coordonnee::Direction direction;
+      Robot::Direction direction;
       bool estDeplacable;
 
       do {
          //Prend une direction parmi toutes les directions possibles
-         direction = (Coordonnee::Direction)
-                      nbreAleatoire((int) Coordonnee::Direction::LEFT + 1);
+         direction = (Robot::Direction)
+                      nbreAleatoire((int) Robot::Direction::LEFT + 1);
 
          switch (direction) {
-            case Coordonnee::Direction::UP:
-               estDeplacable = objet.getCoordonnee().getPosY() - distance > posInitiale;
+            case Robot::Direction::UP:
+               estDeplacable = objet.getCoordonnee().getPosY() -
+                               distance > posInitiale;
                break;
-            case Coordonnee::Direction::DOWN:
-               estDeplacable = objet.getCoordonnee().getPosY() + distance < _hauteur;
+            case Robot::Direction::DOWN:
+               estDeplacable = objet.getCoordonnee().getPosY() +
+                               distance < _hauteur;
                break;
-            case Coordonnee::Direction::RIGHT:
-               estDeplacable = objet.getCoordonnee().getPosX() + distance < _largeur;
+            case Robot::Direction::RIGHT:
+               estDeplacable = objet.getCoordonnee().getPosX() +
+                               distance < _largeur;
                break;
-            case Coordonnee::Direction::LEFT:
-               estDeplacable = objet.getCoordonnee().getPosX() - distance > posInitiale;
+            case Robot::Direction::LEFT:
+               estDeplacable = objet.getCoordonnee().getPosX() -
+                               distance > posInitiale;
                break;
          }
       }while(!estDeplacable);
@@ -162,6 +164,7 @@ void Terrain<T>::deplacerObjets(unsigned distance) {
    }
 }
 
+//--------------------------------------------------------------------------------
 template <typename T>
 void Terrain<T>::supprimerObjets() {
    auto it = remove_if(_objets.begin(), _objets.end(),
@@ -169,12 +172,12 @@ void Terrain<T>::supprimerObjets() {
    _objets.erase(it, _objets.end());
 }
 
+//--------------------------------------------------------------------------------
 template <typename T>
 bool Terrain<T>::estTermine() {
-   return _objets.size() == 1; //TODO <= 1 si jamais 2 robots sont supprimés en même
-                               // temps
-}
+   return _objets.size() <= 1;
 
+}
 
 /* -------------------------------------------------------------------------------
  *  Définition des fonctions internes
@@ -182,7 +185,15 @@ bool Terrain<T>::estTermine() {
 
 template <typename T>
 void afficherLimiteVert(T largeur, char caractere) {
-   std::cout << std::setfill(caractere) << setw(largeur + 1) << '\n';
+   std::cout << std::setfill(caractere) << std::setw((int) largeur + 1) << '\n';
 }
+
+//--------------------------------------------------------------------------------
+template<>
+void afficherLimiteVert(unsigned largeur, char caractere) {
+   std::cout << std::setfill(caractere) << std::setw((int) largeur + 1) << '\n';
+}
+
+//--------------------------------------------------------------------------------
 
 #endif //TERRAIN_DEF_H
