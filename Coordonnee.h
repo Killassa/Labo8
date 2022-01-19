@@ -5,8 +5,8 @@ Nom du labo     : Labo 8 - Survivor
 Auteur(s)       : Grégory Rey-Mermet, Cédric Rosat
 Date creation   : 14.01.2022
 
-Description     : Ce fichier d'en-tête (.h) met à la disposition de l'utilisateur
-                  une classe permettant de gérer des coordonnées
+Description     : Met à disposition des coordonnées 2D. De plus permet d'indiquer
+                  le sens de déplacement de ces coordonnées.
 
 Remarque(s)     : -
 
@@ -19,18 +19,18 @@ Compilateur     : Mingw-w64 g++ 11.2.0
 #ifndef COORDONNEE_H
 #define COORDONNEE_H
 
-
 class Coordonnee {
 public:
+
    //Les directions de déplacement d'une coordonnée
    enum class Direction {UP, DOWN, RIGHT, LEFT};
-
 
    /* -------------------------------------------------------------------------------
     *  Constructeurs et destructeur
     * -----------------------------------------------------------------------------*/
+
    /**
-    * Constructeur par défaut
+    * Constructeur par défaut (x et y sont à 0)
     */
    Coordonnee();
 
@@ -47,6 +47,7 @@ public:
    /* -------------------------------------------------------------------------------
     *  Fonctions membres
     * -----------------------------------------------------------------------------*/
+
    /**
     * Opérateur de comparaison d'une coordonnée
     *
@@ -55,7 +56,6 @@ public:
     *                   False : Les coordéonnes sont différentes
     */
    bool operator==(const Coordonnee& coordonnee) const;
-
 
    /**
     * Déplacement d'une coordonnées sur un axe
@@ -83,6 +83,7 @@ public:
     * @return Coordonnée Y
     */
    unsigned getPosY() const;
+
 
 
 private:
