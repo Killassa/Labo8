@@ -21,18 +21,26 @@ Compilateur     : Mingw-w64 g++ 11.2.0
  *  Constructeurs et destructeur
  * -----------------------------------------------------------------------------*/
 
-Coordonnee::Coordonnee() : Coordonnee(0, 0) {}
+Coordonnee::Coordonnee() : Coordonnee(0u, 0u) {}
 
 //--------------------------------------------------------------------------------
-
 Coordonnee::Coordonnee(unsigned posX, unsigned posY) : _posX(posX), _posY(posY) {}
 
 /* -------------------------------------------------------------------------------
  *  Fonctions membres
  * -----------------------------------------------------------------------------*/
 
+void Coordonnee::deplacer(unsigned int posX, unsigned int posY) {
+   _posX = posX;
+   _posY = posY;
+}
+
+/* -------------------------------------------------------------------------------
+ *  Opérateurs
+ * -----------------------------------------------------------------------------*/
+
 bool Coordonnee::operator==(const Coordonnee& coordonnee) const {
-   return this->_posX == coordonnee._posX and this->_posY == coordonnee._posY;
+   return _posX == coordonnee._posX and _posY == coordonnee._posY;
 }
 
 /* -------------------------------------------------------------------------------
@@ -46,14 +54,4 @@ unsigned Coordonnee::getPosX() const {
 //--------------------------------------------------------------------------------
 unsigned Coordonnee::getPosY() const {
    return _posY;
-}
-
-//--------------------------------------------------------------------------------
-void Coordonnee::setPosX(unsigned posX) {
-   _posX = posX;
-}
-
-//--------------------------------------------------------------------------------
-void Coordonnee::setPosY(unsigned posY) {
-   _posY = posY;
 }

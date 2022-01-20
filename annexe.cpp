@@ -15,7 +15,7 @@ Compilateur     : Mingw-w64 g++ 11.2.0
 -------------------------------------------------------------------------------------
 */
 
-#include <iostream> // cout, cin //TODO Déjà importé depuis annexe_def.h -> annexe.h
+#include <iostream> // cout, cin
 #include <limits>   // numeric_limits
 
 #include "annexe.h"

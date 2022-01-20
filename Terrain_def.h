@@ -31,9 +31,9 @@ Compilateur     : Mingw-w64 g++ 11.2.0
 /**
  * Affiche la limite verticale du terrain
  *
- * @tparam T
- * @param largeur
- * @param caractere
+ * @tparam T         Type de la saisie
+ * @param  largeur   Nombre de caractères à afficher pour la limite
+ * @param  caractere Caractère de remplissage
  */
 template <typename T>
 void afficherLimiteVert(T largeur, char caractere = '-');
@@ -45,7 +45,7 @@ void afficherLimiteVert(T largeur, char caractere = '-');
 //TODO Revoir l'algorithmie pour économiser la mémoire et être plus efficace
 template <typename T>
 std::ostream& operator<<(std::ostream& os, const Terrain<T>& terrain) {
-   afficherLimiteVert(terrain._largeur + 2U);
+   afficherLimiteVert<unsigned>(terrain._largeur + 2);
 
    for (unsigned ligne = 0; ligne < terrain._hauteur; ++ligne) {
       // String représentant une ligne sans objets
@@ -67,7 +67,7 @@ std::ostream& operator<<(std::ostream& os, const Terrain<T>& terrain) {
       // Affiche la ligne avec les bordures et les robots
       os << "|" << contenu << "|" << std::endl;
    }
-   afficherLimiteVert(terrain._largeur + 2U);
+   afficherLimiteVert<unsigned>(terrain._largeur + 2);
    return os;
 }
 
@@ -76,8 +76,10 @@ std::ostream& operator<<(std::ostream& os, const Terrain<T>& terrain) {
  * -----------------------------------------------------------------------------*/
 
 template <typename T>
-Terrain<T>::Terrain(unsigned largeur, unsigned hauteur)
-   : _largeur(largeur), _hauteur(hauteur), _objets({}) {}
+Terrain<T>::Terrain(unsigned largeur, unsigned hauteur, size_t capacite)
+   : _largeur(largeur), _hauteur(hauteur) {
+      _objets.reserve(capacite);
+   }
 
 /* -------------------------------------------------------------------------------
  *  Fonctions membres
@@ -92,6 +94,9 @@ void Terrain<T>::ajoutObjet(const T& objet) {
 template <typename T>
 T Terrain<T>::nouvelObjet() {
 
+   // Initialise une seule fois la seed pour rand()
+   initRand();
+
    // Impossible de créer plus d'objets qu'il n'y a de cases
    assert(_objets.size() < _largeur * _hauteur);
 
@@ -99,8 +104,8 @@ T Terrain<T>::nouvelObjet() {
 
    // Contrôle si la position de l'objet ne recouvre aucun autre objet
    do {
-      // Génération de positions aléatoires dans les limites du terrain
-      coord = Coordonnee(nbreAleatoire(_largeur), nbreAleatoire(_hauteur));
+      // Positions aléatoires dans les limites du terrain [0 - borneSup[
+      coord = Coordonnee(nbreAleatoire(_largeur - 1), nbreAleatoire(_hauteur - 1));
 
       // Pas de contrôle de recouvrement s'il y a moins de 2 objets
       if ((_objets).size() < 2) {break;}
@@ -125,9 +130,12 @@ void Terrain<T>::deplacerObjets(unsigned distance) {
       bool estDeplacable;
 
       do {
+         //TODO à tester
          //Prend une direction parmi toutes les directions possibles
-         direction = (Robot::Direction)
-                      nbreAleatoire((int) Robot::Direction::LEFT + 1);
+         //direction = (Robot::Direction)
+         //             nbreAleatoire((int) Robot::Direction::LEFT + 1);
+
+         direction = nbreAleatoire(Robot::Direction::LEFT);
 
          switch (direction) {
             case Robot::Direction::UP:
@@ -147,7 +155,7 @@ void Terrain<T>::deplacerObjets(unsigned distance) {
                                distance > posInitiale;
                break;
          }
-      }while(!estDeplacable);
+      } while (not estDeplacable);
 
       objet.deplacer(direction, distance);
 
@@ -170,13 +178,13 @@ void Terrain<T>::supprimerObjets() {
    auto it = remove_if(_objets.begin(), _objets.end(),
                        [](T objet) { return objet.getEstDetruit(); });
    _objets.erase(it, _objets.end());
+   //TODO shrink to fit
 }
 
 //--------------------------------------------------------------------------------
 template <typename T>
-bool Terrain<T>::estTermine() {
+bool Terrain<T>::objetEstSeul() {
    return _objets.size() <= 1;
-
 }
 
 /* -------------------------------------------------------------------------------
@@ -185,12 +193,6 @@ bool Terrain<T>::estTermine() {
 
 template <typename T>
 void afficherLimiteVert(T largeur, char caractere) {
-   std::cout << std::setfill(caractere) << std::setw((int) largeur + 1) << '\n';
-}
-
-//--------------------------------------------------------------------------------
-template<>
-void afficherLimiteVert(unsigned largeur, char caractere) {
    std::cout << std::setfill(caractere) << std::setw((int) largeur + 1) << '\n';
 }
 

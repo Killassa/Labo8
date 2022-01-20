@@ -5,7 +5,7 @@ Nom du labo     : Labo 8 - Survivor
 Auteur(s)       : Grégory Rey-Mermet, Cédric Rosat
 Date creation   : 14.01.2022
 
-Description     : Ce fichier définit diverses fonctions utiles...
+Description     : Constructeurs, méthodes et accesseurs pour interagir avec un robot.
 
 Remarque(s)     : -
 
@@ -23,9 +23,15 @@ using namespace std;
  *  Constructeurs et destructeur
  * -----------------------------------------------------------------------------*/
 
-Robot::Robot(const Coordonnee& coordonnee)
-: _coordonnee(coordonnee), _direction(Direction::UP), _estDetruit(false),
-  _id(_idSuivant++) {}
+Robot::Robot() : Robot({0, 0}) {}
+
+//--------------------------------------------------------------------------------
+Robot::Robot(const Coordonnee& coordonnee) : _coordonnee(coordonnee),
+_direction(Direction::UP), _estDetruit(false), _id(_idSuivant++) {}
+
+//--------------------------------------------------------------------------------
+Robot::Robot(const Robot& robot) : _coordonnee(robot._coordonnee),
+_direction(robot._direction), _estDetruit(robot._estDetruit), _id(_idSuivant++) {}
 
 /* -------------------------------------------------------------------------------
  *  Accesseurs
@@ -48,11 +54,12 @@ bool Robot::getEstDetruit() const {
 /* -------------------------------------------------------------------------------
  *  Fonctions membres
  * -----------------------------------------------------------------------------*/
+//TODO merge
 Robot& Robot::operator=(const Robot& robot) {
    //cast en non constant pour permettre le changement de valeur
-   (unsigned &)this->_id = robot._id;
+   (unsigned &)_id = robot._id;
 
-   this->_coordonnee = robot._coordonnee;
+   _coordonnee = robot._coordonnee;
    return *this;
 }
 
@@ -60,16 +67,20 @@ Robot& Robot::operator=(const Robot& robot) {
 void Robot::deplacer(Direction direction, unsigned distance) {
    switch (direction) {
       case Direction::UP:
-         _coordonnee.setPosY(_coordonnee.getPosY() + distance);
+         _coordonnee.deplacer(_coordonnee.getPosX(),
+                              _coordonnee.getPosY() - distance);
          break;
       case Direction::DOWN:
-         _coordonnee.setPosY(_coordonnee.getPosY() - distance);
+         _coordonnee.deplacer(_coordonnee.getPosX(),
+                              _coordonnee.getPosY() + distance);
          break;
       case Direction::RIGHT:
-         _coordonnee.setPosX(_coordonnee.getPosX() + distance);
+         _coordonnee.deplacer(_coordonnee.getPosX() + distance,
+                              _coordonnee.getPosY());
          break;
       case Direction::LEFT:
-         _coordonnee.setPosX(_coordonnee.getPosX() - distance);
+         _coordonnee.deplacer(_coordonnee.getPosX() - distance,
+                              _coordonnee.getPosY());
          break;
    }
 }
@@ -87,4 +98,5 @@ void Robot::reparation() {
 /* -------------------------------------------------------------------------------
  *  Données membres
  * -----------------------------------------------------------------------------*/
+
 unsigned Robot::_idSuivant = 1;

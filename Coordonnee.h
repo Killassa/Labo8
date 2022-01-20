@@ -26,7 +26,7 @@ public:
     * -----------------------------------------------------------------------------*/
 
    /**
-    * Constructeur par défaut (x et y sont à 0)
+    * Constructeur par défaut (x et y sont par défaut à 0)
     */
    Coordonnee();
 
@@ -39,13 +39,24 @@ public:
    Coordonnee(unsigned posX, unsigned posY);
 
 
-
    /* -------------------------------------------------------------------------------
     *  Fonctions membres
     * -----------------------------------------------------------------------------*/
 
    /**
-    * Opérateur de comparaison d'une coordonnée
+    * Met à jour les coordonnées
+    *
+    * @param posX Nouvelle coordonnée X
+    * @param posY Nouvelle coordonnée Y
+    */
+   void deplacer(unsigned posX, unsigned posY);
+
+   /* -------------------------------------------------------------------------------
+    *  Opérateur
+    * -----------------------------------------------------------------------------*/
+
+   /**
+    * Opérateur de comparaison entre coordonnées
     *
     * @param coordonnee Coordonnée avec laquelle on fait une comparaison
     * @return           True  : Les coordonnées sont identiques
@@ -57,6 +68,7 @@ public:
    /* -------------------------------------------------------------------------------
     *  Accesseurs
     * -----------------------------------------------------------------------------*/
+
    /**
     * Permet de lire la valeur de X de la coordonnée
     *
@@ -70,21 +82,6 @@ public:
     * @return Coordonnée Y
     */
    unsigned getPosY() const;
-
-   /**
-    * Permet de modifier la coordonnée X
-    *
-    * @param posX
-    */
-   void setPosX(unsigned posX);
-
-   /**
-    * Permet de modifier la coordonnée Y
-    *
-    * @param posY
-    */
-   void setPosY(unsigned posY);
-
 
 
 private:

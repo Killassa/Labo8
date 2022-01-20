@@ -13,8 +13,7 @@ Description     : Cette classe permet d'instancier un terrain pouvant contenir d
 Remarque(s)     : L'opérateur de flux << peut afficher correctement au maximum 9
                   objets.
                   Chaque objet doit avoir comme propriété une coordonnée (voir classe
-                  coordonnée)
-                  //TODO Ajout de l'appel d'initRand() ?
+                  coordonnée).
                   Si la méthode nouvel objet est utilisée, il faut initialiser la
                   seed pour la fonction rand().
 
@@ -51,13 +50,12 @@ public:
    /**
     * Constructeur d'initialisation
     *
-    * @param largeur Largeur du terrain
-    * @param hauteur Hauteur du terrain
+    * @param largeur  Largeur du terrain
+    * @param hauteur  Hauteur du terrain
+    * @param capacite Capacité à réserver pour le nombre d'objets dans le terrain
+    *                 (un terrain vide ne réserve aucune capacité pour les objets)
     */
-   Terrain(unsigned largeur, unsigned hauteur);
-
-   //TODO Destructeur implicite pas suffisant, destruction en profondeur
-   // Si le terrain est détruit, tous les objets sont détruits avec
+   Terrain(unsigned largeur, unsigned hauteur, size_t capacite = 0);
 
    /* -------------------------------------------------------------------------------
     *  Fonctions membres
@@ -90,13 +88,13 @@ public:
     */
    void supprimerObjets();
 
-   /** //TODO Adapter le commentaire ci-dessous en fonction de l'autre TODO
+   /**
     * Indique si le nombre d'objets présents sur le terrain est <= 1
     *
     * @return   True  : Il ne reste un objet ou moins dans la liste d'objets
     *           False : Il reste plusieurs objets dans la liste d'objets
     */
-   bool estTermine();
+   bool objetEstSeul();
 
 private:
    /* -------------------------------------------------------------------------------

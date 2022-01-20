@@ -46,4 +46,10 @@ T saisir(const std::string& msgSaisie, T min, T max, const std::string& msgErreu
    return saisie;
 }
 
+//--------------------------------------------------------------------------------
+template <typename T>
+T nbreAleatoire(T borneSup) {
+   return T(rand() % ((int) borneSup + 1));
+}
+
 #endif // ANNEXE_DEF_H
