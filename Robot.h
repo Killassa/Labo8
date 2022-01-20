@@ -10,7 +10,8 @@ Description     : Cette classe permet de créer des robots en leur assignant une
                   d'interagir avec les robots.
 
 Remarque(s)     : Chaque robot a son propre identifiant qui est unique. La
-                  destruction du robot ne libère pas son ID.
+                  destruction du robot ne libère pas son ID. La copie d'un robot
+                  lui attribue un nouvel ID.
 
 Modification(s) : -
 
@@ -21,7 +22,7 @@ Compilateur     : Mingw-w64 g++ 11.2.0
 #ifndef ROBOT_H
 #define ROBOT_H
 
-#include <ostream>
+#include <ostream>      // Flux de sortie
 #include "Coordonnee.h"
 
 template <typename T>
@@ -29,25 +30,38 @@ class Terrain;
 
 class Robot {
    /* -------------------------------------------------------------------------------
-   *  Fonctions amies
-   * -----------------------------------------------------------------------------*/
+    *  Fonctions amies
+    * -----------------------------------------------------------------------------*/
 
    template<typename T>
    friend std::ostream& operator<<(std::ostream& os, const Terrain<T>& terrain);
 
 public:
+   //Les directions de déplacement du robot
+   enum class Direction {UP, DOWN, RIGHT, LEFT};
+
    /* -------------------------------------------------------------------------------
-   *  Constructeurs et destructeur
-   * -----------------------------------------------------------------------------*/
+    *  Constructeurs et destructeur
+    * -----------------------------------------------------------------------------*/
 
    /**
-    * Contructeur
+    * Constructeur par défaut (position par défaut à (0,0))
+    */
+   Robot();
+
+   /**
+    * Constructeur d'initialisation
     *
-    * @param coordonnee     Les coordonnées de création du robot
+    * @param coordonnee Les coordonnées de création du robot
     */
    Robot(const Coordonnee& coordonnee);
 
-   Robot(const Robot& robot) = default;
+   /**
+    * Constructeur de copie (la copie du robot aura un nouvel ID et non le même)
+    *
+    * @param robot Robot à copier (sauf ID -> voir remarque)
+    */
+   Robot(const Robot& robot);
 
    /* -------------------------------------------------------------------------------
     *  Accesseurs
@@ -89,12 +103,12 @@ public:
     * Permet de déplacer un robot dans une direction défini
     *
     * @param direction  Direction dans laquelle on veut déplacer le robot
-    * @param distance       Permet de définir la distance de déplacement
+    * @param distance   Permet de définir la distance de déplacement
     */
-   void deplacer(Coordonnee::Direction direction, unsigned distance = 1);
+   void deplacer(Direction direction, unsigned distance = 1);
 
    /**
-    * Detruire un robot
+    * Détruire un robot
     */
    void destruction();
 
@@ -109,10 +123,12 @@ private:
     *  Données membres
     * -----------------------------------------------------------------------------*/
 
-   const  unsigned   _id;        //L'ID unique du robot
-   static unsigned   _idSuivant; //ID pour le robot suivant
-          Coordonnee _coordonnee;//Les coordonnées du Robot
-          bool       _estDetruit;//Indique si le robot est détruit ou non
+   Coordonnee        _coordonnee; // Les coordonnées du Robot
+   Direction         _direction;  // Direction de déplacement du robot
+   bool              _estDetruit; // Indique si le robot est détruit ou non
+   const  unsigned   _id;         // L'ID unique du robot
+
+   static unsigned   _idSuivant;  // ID pour le robot suivant
 };
 
 #endif //ROBOT_H

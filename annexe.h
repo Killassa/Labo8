@@ -54,12 +54,12 @@ void initRand();
 /**
  * Saisie dans un intervalle donné (saisie controllée)
  *
- * @tparam T        Type de la saisie
- * @param msgSaisie Message pour indiquer la saisie à effectuer
- * @param min       Valeur min
- * @param max       Valeur max
- * @param msgErreur Message d'erreur ("" par défaut)
- * @return          Entier saisi
+ * @tparam T         Type de la saisie
+ * @param  msgSaisie Message pour indiquer la saisie à effectuer
+ * @param  min       Valeur min
+ * @param  max       Valeur max
+ * @param  msgErreur Message d'erreur ("" par défaut)
+ * @return           Entier saisi
  */
 template <typename T>
 T saisir(const std::string& msgSaisie, T min, T max,
@@ -67,16 +67,14 @@ T saisir(const std::string& msgSaisie, T min, T max,
 
 //--------------------------------------------------------------------------------
 /**
- * Génère un nombre aléatoire entre [0, borneSup[
+ * Génère un nombre aléatoire entre [0, borneSup]
  *
- * @tparam T       Type du nombre généré
- * @param borneSup Borne supérieure (non incluse)
- * @return         Nombre semi-aléatoire
+ * @tparam T        Type du nombre généré
+ * @param  borneSup Borne supérieure (incluse)
+ * @return          Nombre semi-aléatoire
  */
 template <typename T>
-T nbreAleatoire(T borneSup) {
-   return (T) rand() % borneSup;
-}
+T nbreAleatoire(T borneSup);
 
 //--------------------------------------------------------------------------------
 

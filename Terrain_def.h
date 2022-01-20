@@ -31,15 +31,12 @@ Compilateur     : Mingw-w64 g++ 11.2.0
 /**
  * Affiche la limite verticale du terrain
  *
- * @tparam T
- * @param largeur
- * @param caractere
+ * @tparam T         Type de la saisie
+ * @param  largeur   Nombre de caractères à afficher pour la limite
+ * @param  caractere Caractère de remplissage
  */
- //TODO Ne devrait pas être générique car la largeur est unisgned de toute façon
- // mais ça nécessite un fichier .cpp uniquement pour cette fonction...
 template <typename T>
 void afficherLimiteVert(T largeur, char caractere = '-');
-
 
 /* -------------------------------------------------------------------------------
  *  Opérateurs
@@ -79,21 +76,26 @@ std::ostream& operator<<(std::ostream& os, const Terrain<T>& terrain) {
  * -----------------------------------------------------------------------------*/
 
 template <typename T>
-Terrain<T>::Terrain(unsigned largeur, unsigned hauteur)
-   : _largeur(largeur), _hauteur(hauteur), _objets({}) {}
+Terrain<T>::Terrain(unsigned largeur, unsigned hauteur, size_t capacite)
+   : _largeur(largeur), _hauteur(hauteur) {
+      _objets.reserve(capacite);
+   }
 
 /* -------------------------------------------------------------------------------
  *  Fonctions membres
  * -----------------------------------------------------------------------------*/
+
 template <typename T>
 void Terrain<T>::ajoutObjet(const T& objet) {
    _objets.push_back(objet);
 }
 
-//TODO nouvelObjet implique la copie d'un objet -> coordAleatoires pour économiser
-// de la mémoire ?
+//--------------------------------------------------------------------------------
 template <typename T>
 T Terrain<T>::nouvelObjet() {
+
+   // Initialise une seule fois la seed pour rand()
+   initRand();
 
    // Impossible de créer plus d'objets qu'il n'y a de cases
    assert(_objets.size() < _largeur * _hauteur);
@@ -102,8 +104,8 @@ T Terrain<T>::nouvelObjet() {
 
    // Contrôle si la position de l'objet ne recouvre aucun autre objet
    do {
-      // Génération de positions aléatoires dans les limites du terrain
-      coord = Coordonnee(nbreAleatoire(_largeur), nbreAleatoire(_hauteur));
+      // Positions aléatoires dans les limites du terrain [0 - borneSup[
+      coord = Coordonnee(nbreAleatoire(_largeur - 1), nbreAleatoire(_hauteur - 1));
 
       // Pas de contrôle de recouvrement s'il y a moins de 2 objets
       if ((_objets).size() < 2) {break;}
@@ -116,6 +118,7 @@ T Terrain<T>::nouvelObjet() {
    return objet;
 }
 
+//--------------------------------------------------------------------------------
 template <typename T>
 void Terrain<T>::deplacerObjets(unsigned distance) {
    unsigned posInitiale = 0;
@@ -123,29 +126,36 @@ void Terrain<T>::deplacerObjets(unsigned distance) {
    for(T& objet : _objets) {
       if (objet.getEstDetruit()) continue;
 
-      Coordonnee::Direction direction;
+      Robot::Direction direction;
       bool estDeplacable;
 
       do {
+         //TODO à tester
          //Prend une direction parmi toutes les directions possibles
-         direction = (Coordonnee::Direction)
-                      nbreAleatoire((int) Coordonnee::Direction::LEFT + 1);
+         //direction = (Robot::Direction)
+         //             nbreAleatoire((int) Robot::Direction::LEFT + 1);
+
+         direction = nbreAleatoire(Robot::Direction::LEFT);
 
          switch (direction) {
-            case Coordonnee::Direction::UP:
-               estDeplacable = objet.getCoordonnee().getPosY() - distance > posInitiale;
+            case Robot::Direction::UP:
+               estDeplacable = objet.getCoordonnee().getPosY() -
+                               distance > posInitiale;
                break;
-            case Coordonnee::Direction::DOWN:
-               estDeplacable = objet.getCoordonnee().getPosY() + distance < _hauteur;
+            case Robot::Direction::DOWN:
+               estDeplacable = objet.getCoordonnee().getPosY() +
+                               distance < _hauteur;
                break;
-            case Coordonnee::Direction::RIGHT:
-               estDeplacable = objet.getCoordonnee().getPosX() + distance < _largeur;
+            case Robot::Direction::RIGHT:
+               estDeplacable = objet.getCoordonnee().getPosX() +
+                               distance < _largeur;
                break;
-            case Coordonnee::Direction::LEFT:
-               estDeplacable = objet.getCoordonnee().getPosX() - distance > posInitiale;
+            case Robot::Direction::LEFT:
+               estDeplacable = objet.getCoordonnee().getPosX() -
+                               distance > posInitiale;
                break;
          }
-      }while(!estDeplacable);
+      } while (not estDeplacable);
 
       objet.deplacer(direction, distance);
 
@@ -162,6 +172,7 @@ void Terrain<T>::deplacerObjets(unsigned distance) {
    }
 }
 
+//--------------------------------------------------------------------------------
 template <typename T>
 void Terrain<T>::supprimerObjets() {
    auto it = remove_if(_objets.begin(), _objets.end(),
@@ -170,11 +181,11 @@ void Terrain<T>::supprimerObjets() {
    _objets.shrink_to_fit();
 }
 
+//--------------------------------------------------------------------------------
 template <typename T>
-bool Terrain<T>::estTermine() {
+bool Terrain<T>::objetEstSeul() {
    return _objets.size() <= 1;
 }
-
 
 /* -------------------------------------------------------------------------------
  *  Définition des fonctions internes
@@ -184,5 +195,7 @@ template <typename T>
 void afficherLimiteVert(T largeur, char caractere) {
    std::cout << std::setfill(caractere) << std::setw((int) largeur + 1) << '\n';
 }
+
+//--------------------------------------------------------------------------------
 
 #endif //TERRAIN_DEF_H

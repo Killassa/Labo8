@@ -5,8 +5,8 @@ Nom du labo     : Labo 8 - Survivor
 Auteur(s)       : Grégory Rey-Mermet, Cédric Rosat
 Date creation   : 14.01.2022
 
-Description     : Met à disposition des coordonnées 2D. De plus permet d'indiquer
-                  le sens de déplacement de ces coordonnées.
+Description     : Met à disposition des coordonnées 2D ainsi qu'un opérateur
+                  permettant de tester si 2 coordonnées sont similaires.
 
 Remarque(s)     : -
 
@@ -21,16 +21,12 @@ Compilateur     : Mingw-w64 g++ 11.2.0
 
 class Coordonnee {
 public:
-
-   //Les directions de déplacement d'une coordonnée
-   enum class Direction {UP, DOWN, RIGHT, LEFT};
-
    /* -------------------------------------------------------------------------------
     *  Constructeurs et destructeur
     * -----------------------------------------------------------------------------*/
 
    /**
-    * Constructeur par défaut (x et y sont à 0)
+    * Constructeur par défaut (x et y sont par défaut à 0)
     */
    Coordonnee();
 
@@ -43,13 +39,24 @@ public:
    Coordonnee(unsigned posX, unsigned posY);
 
 
-
    /* -------------------------------------------------------------------------------
     *  Fonctions membres
     * -----------------------------------------------------------------------------*/
 
    /**
-    * Opérateur de comparaison d'une coordonnée
+    * Met à jour les coordonnées
+    *
+    * @param posX Nouvelle coordonnée X
+    * @param posY Nouvelle coordonnée Y
+    */
+   void deplacer(unsigned posX, unsigned posY);
+
+   /* -------------------------------------------------------------------------------
+    *  Opérateur
+    * -----------------------------------------------------------------------------*/
+
+   /**
+    * Opérateur de comparaison entre coordonnées
     *
     * @param coordonnee Coordonnée avec laquelle on fait une comparaison
     * @return           True  : Les coordonnées sont identiques
@@ -57,19 +64,11 @@ public:
     */
    bool operator==(const Coordonnee& coordonnee) const;
 
-   /**
-    * Déplacement d'une coordonnées sur un axe
-    *
-    * @param direction La direction dans laquelle le déplacement est effectué
-    * @param saut      Le nombre d'unité de déplacement
-    */
-   void deplacer(Direction direction, unsigned distance = 1);
-
-
 
    /* -------------------------------------------------------------------------------
     *  Accesseurs
     * -----------------------------------------------------------------------------*/
+
    /**
     * Permet de lire la valeur de X de la coordonnée
     *
@@ -83,7 +82,6 @@ public:
     * @return Coordonnée Y
     */
    unsigned getPosY() const;
-
 
 
 private:

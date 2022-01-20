@@ -5,7 +5,15 @@ Nom du labo     : Labo 8 - Survivor
 Auteur(s)       : Grégory Rey-Mermet, Cédric Rosat
 Date creation   : 14.01.2022
 
-Description     :
+ //TODO a faire
+Description     : Ce programme simule des robots autonomes dans "
+                                   un espace donné.\n\nL'utilisateur doit saisir "
+                                   "la taille du terrain ainsi que le nombre de "
+                                   "robots qu'il souhaite y ajouter.\nLes robots "
+                                   "sont ajoutes de façon aléatoire. Lorsqu'il y a "
+                                   "un recouvrement, l'un des robots est detruits.\n"
+                                   "La partie s'arrete quand il ne reste plus qu'un "
+                                   "seul robot.\n"
 
 Remarque(s)     : -
 
@@ -14,9 +22,10 @@ Modification(s) : -
 Compilateur     : Mingw-w64 g++ 11.2.0
 -----------------------------------------------------------------------------------
 */
-#include <cstdlib>
-#include <iostream>
-#include <thread>    //this_thread::sleep_for(...)
+
+#include <cstdlib>   // EXIT_SUCCESS
+#include <iostream>  // cout
+#include <thread>    // this_thread::sleep_for(...)
 
 #include "annexe.h"
 #include "Robot.h"
@@ -29,82 +38,80 @@ int main() {
     *  Initialisation des messages
     * -----------------------------------------------------------------------------*/
 
-   //Message d'introduction du programme
-   const string MSG_INTRO = "Ce programme permet de simuler le mouvement d'un nombre\n"
-                            "de robots donnes dans un espace defini par l'utilisateur.\n"
-                            "Les robots sont disposes de maniere aleatoire et se\n"
-                            "deplace sur la grille, lorsque 2 robots se rencontre\n"
-                            "le dernier arrive detruit l'autre et le jeu s'arrete\n"
-                            "lorsqu'il ne reste qu'un seul robot.";
-
-   //Message pour la largeur du terrain
-   const string MSG_LARGEUR = "largeur";
-
-   //Message pour la hauteur du terrain
-   const string MSG_HAUTEUR = "hauteur";
-
-   //Message pour le nombre d'objets'
-   const string MSG_OBJET = "nbre object";
-
-   //Message d'erreur
-   const string MSG_ERREUR_SAISIE    = "/!\\ Saisie incorrecte ...\n"s;
-
-   //Message de fin pour quitter le programme
-   const string MSG_QUITTER          = "Presser ENTER pour quitter";
+   const string MSG_INTRO         = "Ce programme simule des robots autonomes dans "
+                                   "un espace donné.\n\nL'utilisateur doit saisir "
+                                   "la taille du terrain ainsi que le nombre de "
+                                   "robots qu'il souhaite y ajouter.\nLes robots "
+                                   "sont ajoutes de façon aléatoire. Lorsqu'il y a "
+                                   "un recouvrement, l'un des robots est detruits.\n"
+                                   "La partie s'arrete quand il ne reste plus qu'un "
+                                   "seul robot.\n",
+                MSG_LARGEUR       = "Entrez la largeur du terrain",
+                MSG_HAUTEUR       = "Entrez la hauteur du terrain",
+                MSG_NB_ROBOTS     = "Entrez le nombre de robots a ajouter",
+                MSG_ERREUR_SAISIE = "/!\\ Saisie incorrecte ...\n",
+                MSG_QUITTER       = "Presser ENTER pour quitter";
 
    /* -------------------------------------------------------------------------------
-    *  Initialisation des variables
+    *  Initialisation des constantes
     * -----------------------------------------------------------------------------*/
-   const unsigned MIN_TERRAIN = 10;    //Valeur minimale pour les dimensions du terrain
-   const unsigned MAX_TERRAIN = 1000;  //valeur maximale pour les dimensions du terrain
-   const unsigned MIN_ROBOT   = 1;     //Nombre minimal d'objets
-   const unsigned MAX_ROBOT   = 9;     //Nombre maximal d'objets
 
-   //Temps d'attente pour l'affichage en miliseconde
-   const chrono::duration ATTENTE = 1000ms;
+   // Bornes dimensions terrain
+   const unsigned MIN_TERRAIN = 10,
+                  MAX_TERRAIN = 1000;
 
+   // Bornes quantité robots
+   const unsigned MIN_ROBOT = 1,
+                  MAX_ROBOT = 9;
+
+   // Délai entre 2 affichages du terrain
+   const chrono::duration DELAIS_AFFICHAGE = 250ms;
 
    /* -------------------------------------------------------------------------------
-    *  Introduction au programme
+    *  Message explicatif et saisie des données
     * -----------------------------------------------------------------------------*/
 
    cout << MSG_INTRO << endl;
 
-   // Saisie des diverses valeurs
    const unsigned LARGEUR     = saisir(MSG_LARGEUR, MIN_TERRAIN, MAX_TERRAIN,
-                                       MSG_ERREUR_SAISIE);
-   const unsigned HAUTEUR     = saisir(MSG_HAUTEUR, MIN_TERRAIN, MAX_TERRAIN,
-                                       MSG_ERREUR_SAISIE);
-   const unsigned NBRE_OBJETS = saisir(MSG_OBJET, MIN_ROBOT, MAX_ROBOT,
+                                       MSG_ERREUR_SAISIE),
+                  HAUTEUR     = saisir(MSG_HAUTEUR, MIN_TERRAIN, MAX_TERRAIN,
+                                       MSG_ERREUR_SAISIE),
+                  NBRE_ROBOTS = saisir(MSG_NB_ROBOTS, MIN_ROBOT, MAX_ROBOT,
                                        MSG_ERREUR_SAISIE);
 
-   // Initialisation de la seed random
-   initRand();
+   /* -------------------------------------------------------------------------------
+    *  Initialisation du terrain et des robots
+    * -----------------------------------------------------------------------------*/
 
-   // Initialisation du terrain
-   Terrain<Robot> terrain(LARGEUR, HAUTEUR);
+   Terrain<Robot> terrain(LARGEUR, HAUTEUR, NBRE_ROBOTS);
 
-   //Remplissage d'un terrain avec des objets
-   for (unsigned nbObjets = 0; nbObjets < NBRE_OBJETS; ++nbObjets) {
+   // Initialise et ajoute les robots sur le terrain
+   for (unsigned nbRobots = 0; nbRobots < NBRE_ROBOTS; ++nbRobots) {
       terrain.ajoutObjet(terrain.nouvelObjet());
    }
+
    cout << terrain << endl;
 
-   //Boucle de jeu
-   do {
+   /* -------------------------------------------------------------------------------
+    *  Déroulement du jeu
+    * -----------------------------------------------------------------------------*/
+
+   // Boucle tant qu'il y a plus d'un robot
+   while (not terrain.objetEstSeul()) {
       terrain.deplacerObjets();
       terrain.supprimerObjets();
 
-      this_thread::sleep_for(ATTENTE);
-      system("cls");
+      this_thread::sleep_for(DELAIS_AFFICHAGE);
+      system("clear");
 
       cout << terrain << endl;
-   }while(!terrain.estTermine());
-
+   }
 
    /* -------------------------------------------------------------------------------
-    *  Message de fin
+    *  Fin de programme
     * -----------------------------------------------------------------------------*/
+
    pause(MSG_QUITTER);
 
    return EXIT_SUCCESS;
