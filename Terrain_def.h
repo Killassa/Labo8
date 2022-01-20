@@ -53,9 +53,10 @@ std::ostream& operator<<(std::ostream& os, const Terrain<T>& terrain) {
       auto first = terrain._objets.cbegin();
 
       // Pour chaque ligne, chercher si une des position Y correspond à la ligne
-      while((first = find_if(first, terrain._objets.cend(),
-                             [ligne](const T& obj){return obj.getCoordonnee().getPosY() == ligne;}))
+      while((first = find_if(first, terrain._objets.cend(), [ligne](const T& obj)
+                             {return obj.getCoordonnee().getPosY() == ligne;}))
             != terrain._objets.cend()) {
+
          // Remplace les " " par l'ID du robot (len = nb de digits de l'ID)
          std::string id = std::to_string(first->_id);
          contenu.replace(first->getCoordonnee().getPosX(), id.length(), id);
@@ -120,20 +121,21 @@ T Terrain<T>::nouvelObjet() {
 //--------------------------------------------------------------------------------
 template <typename T>
 void Terrain<T>::deplacerObjets(unsigned distance) {
-   unsigned posInitiale = 0;
 
    for(T& objet : _objets) {
       if (objet.getEstDetruit()) continue;
 
       Robot::Direction direction;
-      bool estDeplacable;
 
+      bool estDeplacable;
       do {
          direction = nbreAleatoire(Robot::Direction::LEFT);
 
+         // Contrôle que le déplacement ne sort pas du terrain
          switch (direction) {
             case Robot::Direction::UP:
-               estDeplacable = objet.getCoordonnee().getPosY() != posInitiale;
+               estDeplacable = objet.getCoordonnee().getPosY()
+                               >= distance;
                break;
             case Robot::Direction::DOWN:
                estDeplacable = objet.getCoordonnee().getPosY() +
@@ -144,9 +146,11 @@ void Terrain<T>::deplacerObjets(unsigned distance) {
                                distance < _largeur;
                break;
             case Robot::Direction::LEFT:
-               estDeplacable = objet.getCoordonnee().getPosX() != posInitiale;
+               estDeplacable = objet.getCoordonnee().getPosX()
+                               >= distance;
                break;
          }
+
       } while (not estDeplacable);
 
       objet.setDirection(direction);

@@ -7,9 +7,9 @@ Date creation   : 14.01.2022
 
 Description     : Ce programme simule des robots autonomes dans un espace donné.
                   L'utilisateur doit saisir la taille du terrain ainsi que le nombre
-                  de robots qu'il souhaite y ajouter. Les robots sont ajoutes de
+                  de robots qu'il souhaite y ajouter. Les robots sont ajoutés de
                   façon aléatoire. Lorsqu'il y a un recouvrement, l'un des robots
-                  est detruits. La partie s'arrete quand il ne reste plus qu'un
+                  est détruits. La partie s'arrête quand il ne reste plus qu'un
                   seul robot.
 
 Remarque(s)     : -
@@ -47,7 +47,7 @@ int main() {
                 MSG_HAUTEUR       = "Entrez la hauteur du terrain",
                 MSG_NB_ROBOTS     = "Entrez le nombre de robots a ajouter",
                 MSG_ERREUR_SAISIE = "/!\\ Saisie incorrecte ...\n",
-                MSG_QUITTER       = "Presser ENTER pour quitter";
+                MSG_QUITTER       = "Partie terminee, pressez ENTER pour quitter";
 
    /* -------------------------------------------------------------------------------
     *  Initialisation des constantes
@@ -100,7 +100,7 @@ int main() {
       terrain.supprimerObjets();
 
       this_thread::sleep_for(DELAIS_AFFICHAGE);
-      system("cls");
+      system("clear");
 
       cout << terrain << endl;
    }

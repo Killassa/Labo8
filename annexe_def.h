@@ -30,7 +30,7 @@ T saisir(const std::string& msgSaisie, const T& min, const T& max,
    T saisie;
    bool erreurSaisie;
    do {
-      std::cout << msgSaisie << " [" << min << ".." << max << "] :";
+      std::cout << msgSaisie << " [" << min << ".." << max << "] : ";
       std::cin >> saisie;
 
       //Vérifie si le flux est en ordre et si la valeur se situe dans les bornes

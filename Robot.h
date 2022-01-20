@@ -53,7 +53,7 @@ public:
     *
     * @param coordonnee Les coordonnées de création du robot
     */
-   Robot(const Coordonnee& coordonnee);
+   explicit Robot(const Coordonnee& coordonnee);
 
    /*
     * Constructeur de copie par défaut
