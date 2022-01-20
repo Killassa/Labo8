@@ -36,13 +36,12 @@ Compilateur     : Mingw-w64 g++ 11.2.0
  * @param  caractere Caractère de remplissage
  */
 template <typename T>
-void afficherLimiteVert(T largeur, char caractere = '-');
+void afficherLimiteVert(const T& largeur, char caractere = '-');
 
 /* -------------------------------------------------------------------------------
  *  Opérateurs
  * -----------------------------------------------------------------------------*/
 
-//TODO Revoir l'algorithmie pour économiser la mémoire et être plus efficace
 template <typename T>
 std::ostream& operator<<(std::ostream& os, const Terrain<T>& terrain) {
    afficherLimiteVert<unsigned>(terrain._largeur + 2);
@@ -130,17 +129,11 @@ void Terrain<T>::deplacerObjets(unsigned distance) {
       bool estDeplacable;
 
       do {
-         //TODO à tester
-         //Prend une direction parmi toutes les directions possibles
-         //direction = (Robot::Direction)
-         //             nbreAleatoire((int) Robot::Direction::LEFT + 1);
-
          direction = nbreAleatoire(Robot::Direction::LEFT);
 
          switch (direction) {
             case Robot::Direction::UP:
-               estDeplacable = objet.getCoordonnee().getPosY() -
-                               distance > posInitiale;
+               estDeplacable = objet.getCoordonnee().getPosY() != posInitiale;
                break;
             case Robot::Direction::DOWN:
                estDeplacable = objet.getCoordonnee().getPosY() +
@@ -151,13 +144,13 @@ void Terrain<T>::deplacerObjets(unsigned distance) {
                                distance < _largeur;
                break;
             case Robot::Direction::LEFT:
-               estDeplacable = objet.getCoordonnee().getPosX() -
-                               distance > posInitiale;
+               estDeplacable = objet.getCoordonnee().getPosX() != posInitiale;
                break;
          }
       } while (not estDeplacable);
 
-      objet.deplacer(direction, distance);
+      objet.setDirection(direction);
+      objet.deplacer(distance);
 
       //Destruction de l'objet précédemment présent
       for(T& aDetruire : _objets) {
@@ -192,7 +185,7 @@ bool Terrain<T>::objetEstSeul() {
  * -----------------------------------------------------------------------------*/
 
 template <typename T>
-void afficherLimiteVert(T largeur, char caractere) {
+void afficherLimiteVert(const T& largeur, char caractere) {
    std::cout << std::setfill(caractere) << std::setw((int) largeur + 1) << '\n';
 }
 

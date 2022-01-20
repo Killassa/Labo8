@@ -62,7 +62,7 @@ void initRand();
  * @return           Entier saisi
  */
 template <typename T>
-T saisir(const std::string& msgSaisie, T min, T max,
+T saisir(const std::string& msgSaisie, const T& min, const T& max,
          const std::string& msgErreur = "");
 
 //--------------------------------------------------------------------------------
@@ -74,7 +74,7 @@ T saisir(const std::string& msgSaisie, T min, T max,
  * @return          Nombre semi-aléatoire
  */
 template <typename T>
-T nbreAleatoire(T borneSup);
+T nbreAleatoire(const T& borneSup);
 
 //--------------------------------------------------------------------------------
 

@@ -29,10 +29,6 @@ Robot::Robot() : Robot({0, 0}) {}
 Robot::Robot(const Coordonnee& coordonnee) : _coordonnee(coordonnee),
 _direction(Direction::UP), _estDetruit(false), _id(_idSuivant++) {}
 
-//--------------------------------------------------------------------------------
-Robot::Robot(const Robot& robot) : _coordonnee(robot._coordonnee),
-_direction(robot._direction), _estDetruit(robot._estDetruit), _id(_idSuivant++) {}
-
 /* -------------------------------------------------------------------------------
  *  Accesseurs
  * -----------------------------------------------------------------------------*/
@@ -51,11 +47,15 @@ bool Robot::getEstDetruit() const {
    return _estDetruit;
 }
 
+void Robot::setDirection(const Direction& direction) {
+   _direction = direction;
+}
+
 /* -------------------------------------------------------------------------------
  *  Fonctions membres
  * -----------------------------------------------------------------------------*/
 Robot& Robot::operator=(const Robot& robot) {
-   //cast en non constant pour permettre le changement de valeur
+   // Cast en non constant pour permettre le changement de valeur
    (unsigned &)_id = robot._id;
 
    _coordonnee = robot._coordonnee;
@@ -64,8 +64,9 @@ Robot& Robot::operator=(const Robot& robot) {
 }
 
 //--------------------------------------------------------------------------------
-void Robot::deplacer(Direction direction, unsigned distance) {
-   switch (direction) {
+void Robot::deplacer(unsigned distance) {
+
+   switch (_direction) {
       case Direction::UP:
          _coordonnee.deplacer(_coordonnee.getPosX(),
                               _coordonnee.getPosY() - distance);

@@ -5,15 +5,12 @@ Nom du labo     : Labo 8 - Survivor
 Auteur(s)       : Grégory Rey-Mermet, Cédric Rosat
 Date creation   : 14.01.2022
 
- //TODO a faire
-Description     : Ce programme simule des robots autonomes dans "
-                                   un espace donné.\n\nL'utilisateur doit saisir "
-                                   "la taille du terrain ainsi que le nombre de "
-                                   "robots qu'il souhaite y ajouter.\nLes robots "
-                                   "sont ajoutes de façon aléatoire. Lorsqu'il y a "
-                                   "un recouvrement, l'un des robots est detruits.\n"
-                                   "La partie s'arrete quand il ne reste plus qu'un "
-                                   "seul robot.\n"
+Description     : Ce programme simule des robots autonomes dans un espace donné.
+                  L'utilisateur doit saisir la taille du terrain ainsi que le nombre
+                  de robots qu'il souhaite y ajouter. Les robots sont ajoutes de
+                  façon aléatoire. Lorsqu'il y a un recouvrement, l'un des robots
+                  est detruits. La partie s'arrete quand il ne reste plus qu'un
+                  seul robot.
 
 Remarque(s)     : -
 
@@ -39,10 +36,10 @@ int main() {
     * -----------------------------------------------------------------------------*/
 
    const string MSG_INTRO         = "Ce programme simule des robots autonomes dans "
-                                   "un espace donné.\n\nL'utilisateur doit saisir "
+                                   "un espace donne.\n\nL'utilisateur doit saisir "
                                    "la taille du terrain ainsi que le nombre de "
                                    "robots qu'il souhaite y ajouter.\nLes robots "
-                                   "sont ajoutes de façon aléatoire. Lorsqu'il y a "
+                                   "sont ajoutes de facon aleatoire. Lorsqu'il y a "
                                    "un recouvrement, l'un des robots est detruits.\n"
                                    "La partie s'arrete quand il ne reste plus qu'un "
                                    "seul robot.\n",
@@ -103,7 +100,7 @@ int main() {
       terrain.supprimerObjets();
 
       this_thread::sleep_for(DELAIS_AFFICHAGE);
-      system("clear");
+      system("cls");
 
       cout << terrain << endl;
    }

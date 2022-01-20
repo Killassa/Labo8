@@ -14,7 +14,6 @@ Modification(s) : -
 Compilateur     : Mingw-w64 g++ 11.2.0
 -----------------------------------------------------------------------------------
 */
-
 #include "Coordonnee.h"
 
 /* -------------------------------------------------------------------------------
@@ -30,7 +29,7 @@ Coordonnee::Coordonnee(unsigned posX, unsigned posY) : _posX(posX), _posY(posY) 
  *  Fonctions membres
  * -----------------------------------------------------------------------------*/
 
-void Coordonnee::deplacer(unsigned int posX, unsigned int posY) {
+void Coordonnee::deplacer(unsigned posX, unsigned posY) {
    _posX = posX;
    _posY = posY;
 }

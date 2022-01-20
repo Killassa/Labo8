@@ -22,7 +22,8 @@ Compilateur     : Mingw-w64 g++ 11.2.0
 
 //--------------------------------------------------------------------------------
 template <typename T>
-T saisir(const std::string& msgSaisie, T min, T max, const std::string& msgErreur) {
+T saisir(const std::string& msgSaisie, const T& min, const T& max,
+         const std::string& msgErreur) {
    //Arrêt si min plus grand que max
    assert(min <= max);
 
@@ -48,7 +49,7 @@ T saisir(const std::string& msgSaisie, T min, T max, const std::string& msgErreu
 
 //--------------------------------------------------------------------------------
 template <typename T>
-T nbreAleatoire(T borneSup) {
+T nbreAleatoire(const T& borneSup) {
    return T(rand() % ((int) borneSup + 1));
 }
 

@@ -10,8 +10,7 @@ Description     : Cette classe permet de créer des robots en leur assignant une
                   d'interagir avec les robots.
 
 Remarque(s)     : Chaque robot a son propre identifiant qui est unique. La
-                  destruction du robot ne libère pas son ID. La copie d'un robot
-                  lui attribue un nouvel ID.
+                  destruction du robot ne libère pas son ID.
 
 Modification(s) : -
 
@@ -56,12 +55,10 @@ public:
     */
    Robot(const Coordonnee& coordonnee);
 
-   /**
-    * Constructeur de copie (la copie du robot aura un nouvel ID et non le même)
-    *
-    * @param robot Robot à copier (sauf ID -> voir remarque)
+   /*
+    * Constructeur de copie par défaut
     */
-   Robot(const Robot& robot);
+   Robot(const Robot& robot) = default;
 
    /* -------------------------------------------------------------------------------
     *  Accesseurs
@@ -88,6 +85,13 @@ public:
     */
    bool getEstDetruit() const;
 
+   /**
+    * Permet d'écrire la direction de déplacement du robot
+    *
+    * @param direction Direction de déplacement
+    */
+   void setDirection(const Direction& direction);
+
    /* -------------------------------------------------------------------------------
     *  Fonctions membres
     * -----------------------------------------------------------------------------*/
@@ -102,10 +106,9 @@ public:
    /**
     * Permet de déplacer un robot dans une direction défini
     *
-    * @param direction  Direction dans laquelle on veut déplacer le robot
     * @param distance   Permet de définir la distance de déplacement
     */
-   void deplacer(Direction direction, unsigned distance = 1);
+   void deplacer(unsigned distance = 1);
 
    /**
     * Détruire un robot
