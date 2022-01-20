@@ -50,6 +50,7 @@ Robot& Robot::operator=(const Robot& robot) {
    (unsigned &)this->_id = robot._id;
 
    this->_coordonnee = robot._coordonnee;
+   this->_estDetruit = robot._estDetruit;
    return *this;
 }
 
