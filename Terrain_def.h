@@ -167,12 +167,12 @@ void Terrain<T>::supprimerObjets() {
    auto it = remove_if(_objets.begin(), _objets.end(),
                        [](T objet) { return objet.getEstDetruit(); });
    _objets.erase(it, _objets.end());
+   _objets.shrink_to_fit();
 }
 
 template <typename T>
 bool Terrain<T>::estTermine() {
-   return _objets.size() == 1; //TODO <= 1 si jamais 2 robots sont supprimés en même
-                               // temps
+   return _objets.size() <= 1;
 }
 
 

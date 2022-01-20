@@ -90,7 +90,7 @@ public:
     */
    void supprimerObjets();
 
-   /** //TODO Adapter le commentaire ci-dessous en fonction de l'autre TODO
+   /**
     * Indique si le nombre d'objets présents sur le terrain est <= 1
     *
     * @return   True  : Il ne reste un objet ou moins dans la liste d'objets
