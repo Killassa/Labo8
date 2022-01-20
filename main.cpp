@@ -25,7 +25,7 @@ Compilateur     : Mingw-w64 g++ 11.2.0
 
 #include <cstdlib>   // EXIT_SUCCESS
 #include <iostream>  // cout
-#include <thread>    //this_thread::sleep_for(...)
+#include <thread>    // this_thread::sleep_for(...)
 
 #include "annexe.h"
 #include "Robot.h"

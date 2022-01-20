@@ -60,6 +60,7 @@ Robot& Robot::operator=(const Robot& robot) {
    (unsigned &)_id = robot._id;
 
    _coordonnee = robot._coordonnee;
+   _estDetruit = robot._estDetruit;
    return *this;
 }
 

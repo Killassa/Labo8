@@ -178,7 +178,7 @@ void Terrain<T>::supprimerObjets() {
    auto it = remove_if(_objets.begin(), _objets.end(),
                        [](T objet) { return objet.getEstDetruit(); });
    _objets.erase(it, _objets.end());
-   //TODO shrink to fit
+   _objets.shrink_to_fit();
 }
 
 //--------------------------------------------------------------------------------
